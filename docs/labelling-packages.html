@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Labelling Data in R</title>
-  <meta name="description" content="Labelling Data in R" />
+  <title>Chapter 1 Labelling Packages | Labelling Data in R</title>
+  <meta name="description" content="Chapter 1 Labelling Packages | Labelling Data in R" />
   <meta name="generator" content="bookdown 0.30 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Labelling Data in R" />
+  <meta property="og:title" content="Chapter 1 Labelling Packages | Labelling Data in R" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Labelling Data in R" />
+  <meta name="twitter:title" content="Chapter 1 Labelling Packages | Labelling Data in R" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
+<link rel="prev" href="index.html"/>
 
-<link rel="next" href="labelling-packages.html"/>
 <script src="libs/header-attrs-2.18/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -93,14 +93,52 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Labelling Data in R</h1>
-<p class="author"><em>MaryClare Roche</em></p>
-<p class="date"><em>2022-11-30</em></p>
-</div>
-<div id="down-the-rabbit-hole" class="section level1 unnumbered">
-<h1>Down the Rabbit-Hole</h1>
-<p>This document is meant to serve as an overview and reference of how to deal with labeled data in R. It primarily focuses on data labeled in Stata, but also touches upon data labeled in SPSS. There are several existing packages to help an R user examine labeled data, however they do not all play nicely together. This book will go over the uses, similarities, and differences between packages.</p>
+<div id="labelling-packages" class="section level1" number="1">
+<h1><span class="header-section-number">Chapter 1</span> Labelling Packages</h1>
+<p>A list of packages that can be used to work with labeled data in R and links to their documentation:</p>
+<ul>
+<li><a href="https://cran.r-project.org/web/packages/haven/haven.pdf">haven</a>
+<ul>
+<li>Read and write labelled data (dta or sav)</li>
+<li>Create labelled vectors</li>
+<li>Check if an object is of class haven-labelled</li>
+<li>Convert from numeric value to label value</li>
+<li>Remove variable and value labels</li>
+<li><a href="https://haven.tidyverse.org/">Tidyverse page</a></li>
+</ul></li>
+<li><a href="https://cran.r-project.org/web/packages/labelled/labelled.pdf">labelled</a>
+<ul>
+<li>Create labelled vectors</li>
+<li>View variable and value labels</li>
+<li>Copy labels from one object to another</li>
+<li>Drop unused labels</li>
+<li>Remove variable and value labels</li>
+<li>Convert some factor data into labeled data</li>
+<li><a href="https://cran.r-project.org/web/packages/labelled/vignettes/intro_labelled.html"><code>labelled</code> vingette</a></li>
+</ul></li>
+<li><a href="https://cran.r-project.org/web/packages/sjlabelled/sjlabelled.pdf">sjlabelled</a>
+<ul>
+<li>Read and write labelled data (dta or sav)</li>
+<li>Create labelled vectors</li>
+<li>Check if an object is labelled class</li>
+<li>View variable and value labels</li>
+<li>Drops unused labels</li>
+<li>Fills in missing labels</li>
+<li>Rem oves one to all value labels</li>
+<li>Replace existing labels</li>
+<li><a href="https://strengejacke.github.io/sjlabelled/articles/labelleddata.html"><code>sjlabelled</code> vingette</a></li>
+</ul></li>
+<li><a href="https://cran.r-project.org/web/packages/expss/expss.pdf">expss</a>
+<ul>
+<li>For SPSS and Excel data</li>
+<li>Add label class to data</li>
+<li>Read and write labeled data for csv, xlsx, and sav formats</li>
+<li>Get/set/drop labels</li>
+<li>Recode vector into numeric type with labels</li>
+<li><a href="https://gdemin.github.io/expss/"><code>expss</code> website</a></li>
+</ul></li>
+</ul>
+<p>All these packages have more functionality than what has been listed here. The points refer strictly to commonly used label-related functionality. The package <code>expss</code>, in particular, has extensive functionality to convert SPSS tools into R. Furthermore, the list above is by no means exhaustive. Packages like <code>foreign</code> and <code>readstata13</code> can read and write labeled data files. The package <code>Hmisc</code> has a function <code>label()</code> that gets/sets label attributes of an object. The four packages listed above, however, were all built specifically wih labeled data in mind, and thus they will be the focus of this book.</p>
 
 </div>
             </section>
@@ -108,8 +146,8 @@
           </div>
         </div>
       </div>
+<a href="index.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
-<a href="labelling-packages.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -140,7 +178,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/MCRoche/Labeling_in_R/edit/master/index.Rmd",
+"link": "https://github.com/MCRoche/Labeling_in_R/edit/master/01-package-list.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -148,7 +186,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/MCRoche/Labeling_in_R/blob/master/index.Rmd",
+"link": "https://github.com/MCRoche/Labeling_in_R/blob/master/01-package-list.Rmd",
 "text": null
 },
 "download": null,
