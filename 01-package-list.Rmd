@@ -1,0 +1,38 @@
+# Labelling Packages
+
+A list of packages that can be used to work with labeled data in R and links to their documentation:
+
+* [haven](https://cran.r-project.org/web/packages/haven/haven.pdf)
+  * Read and write labelled data (dta or sav)
+  * Create labelled vectors
+  * Check if an object is of class haven-labelled
+  * Convert from numeric value to label value
+  * Remove variable and value labels
+  * [Tidyverse page](https://haven.tidyverse.org/)
+* [labelled](https://cran.r-project.org/web/packages/labelled/labelled.pdf)
+  * Create labelled vectors
+  * View variable and value labels
+  * Copy labels from one object to another
+  * Drop unused labels
+  * Remove variable and value labels
+  * Convert some factor data into labeled data
+  * [`labelled` vingette](https://cran.r-project.org/web/packages/labelled/vignettes/intro_labelled.html)
+* [sjlabelled](https://cran.r-project.org/web/packages/sjlabelled/sjlabelled.pdf)
+  * Read and write labelled data (dta or sav)
+  * Create labelled vectors
+  * Check if an object is labelled class
+  * View variable and value labels
+  * Drops unused labels
+  * Fills in missing labels
+  * Rem oves one to all value labels
+  * Replace existing labels
+  * [`sjlabelled` vingette](https://strengejacke.github.io/sjlabelled/articles/labelleddata.html)
+* [expss](https://cran.r-project.org/web/packages/expss/expss.pdf)
+  * For SPSS and Excel data
+  * Add label class to data
+  * Read and write labeled data for csv, xlsx, and sav formats
+  * Get/set/drop labels
+  * Recode vector into numeric type with labels
+  * [`expss` website](https://gdemin.github.io/expss/)
+  
+All these packages have more functionality than what has been listed here. The points refer strictly to commonly used label-related functionality. The package `expss`, in particular, has extensive functionality to convert SPSS tools into R. Furthermore, the list above is by no means exhaustive. Packages like `foreign` and `readstata13` can read and write labeled data files. The package `Hmisc` has a function `label()` that gets/sets label attributes of an object. The four packages listed above, however, were all built specifically wih labeled data in mind, and thus they will be the focus of this book.

@@ -5,6 +5,6 @@ date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 ---
 
-# Down the Rabbit-Hole
+# Down the Rabbit-Hole {-}
 
 This document is meant to serve as an overview and reference of how to deal with labeled data in R. It primarily focuses on data labeled in Stata, but also touches upon data labeled in SPSS. There are several existing packages to help an R user examine labeled data, however they do not all play nicely together. This book will go over the uses, similarities, and differences between packages.
