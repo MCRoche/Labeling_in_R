@@ -1,10 +1,37 @@
-# Reading in Labelled Data
+# Reading in Labelled Data: Stata
+
+The first step to working with labeled data in R is loading a labeled data file, and making sure the labels are attached. Several of the packages in [Labelling Packages] have functions for loading labeled data while others have functions checking for labels. A few packages do both. See the table below to see the functionality of each package with respect to loading labeled data and checking for labels.
+
++---------------+------------+-------------------+-------------+
+| Package       | Loads .dta | Checks for Labels | View Labels |
++===============+============+===================+=============+
+| `haven`       | Yes        | Yes$^*$           | No          |
++---------------+------------+-------------------+-------------+
+| `labelled`    | No         | Yes$^*$           | Yes         |
++---------------+------------+-------------------+-------------+
+| `sjlabelled`  | Yes        | Yes               | Yes         |
++---------------+------------+-------------------+-------------+
+| `expss`       | No         | Yes               | Yes         |
++---------------+------------+-------------------+-------------+
+| `foreign`     | Up to 12   | No                | No          |
++---------------+------------+-------------------+-------------+
+| `readstata13` | Past 12    | No                | Yes         |
++---------------+------------+-------------------+-------------+
+| `Hmisc`       | No         | No                | Yes         |
++---------------+------------+-------------------+-------------+
 
 
-```{r drive-data-path,echo=FALSE}
+$^*$The function used to check for labels in the `haven` and `labelled` packages is the same.
+
+
+
+This page uses the publicly available Arab Barometer Wave VII data, which can be found [here](https://www.arabbarometer.org/survey-data/data-downloads/). The Arab Barometer data is available labeled in both Stata and SPSS files.
+
+
+```{r drive-dta-path,echo=FALSE}
 
 path_to_dta <- "/Volumes/GoogleDrive/Shared drives/Arab Barometer/AB7/Data/RELEASE_DATA/Latest/AB7_ENG_Release_Version6.dta"
-path_to_sav <- "/Volumes/GoogleDrive/Shared drives/Arab Barometer/AB7/Data/RELEASE_DATA/Latest/AB7_ENG_Release_Version6.sav"
+
 
 ```
 
@@ -14,39 +41,36 @@ path_to_sav <- "/Volumes/GoogleDrive/Shared drives/Arab Barometer/AB7/Data/RELEA
 
 ```{r haven-loading-dta}
 
-pd_haven_dta <- haven::read_dta(path_to_dta)
+AB7_haven_dta <- haven::read_dta(path_to_dta)
 
-class(pd_haven_dta)
-class(pd_haven_dta$Q1COVID19)
+class(AB7_haven_dta)
+class(AB7_haven_dta$Q101)
 
 ```
+
 
 
 ### Loading .dta file with `sjlabelled`
 
 ```{r sjlabelled-loading-dta}
 
-pd_sjlabelled_dta <- sjlabelled::read_stata(path_to_dta)
+AB7_sjlabelled_dta <- sjlabelled::read_stata(path_to_dta)
 
-class(pd_sjlabelled_dta)
-class(pd_sjlabelled_dta$Q1COVID19)
+class(AB7_sjlabelled_dta)
+class(AB7_sjlabelled_dta$Q101)
 
 ```
 
-
-
-
-
 ### Loading .dta file with `readstata13`
 
-```{r readstata13-loading-dta-v1}
+```{r readstata13-loading-dta-v1,warning=FALSE}
 
-pd_readstata13_dta_v1 <- readstata13::read.dta13(path_to_dta)
+AB7_readstata13_dta_v1 <- readstata13::read.dta13(path_to_dta)
 
-warnings()[1]
+#warnings()[1]
 
-class(pd_readstata13_dta_v1)
-class(pd_readstata13_dta_v1$Q1COVID19)
+class(AB7_readstata13_dta_v1)
+class(AB7_readstata13_dta_v1$Q101)
 
 ```
 
@@ -54,60 +78,45 @@ This dta file was created in R for Stata using `haven`. The data was stored as d
 
 The warning message suggests setting the parameter `nonint.factors` to `TRUE`, so let's see what happens then.
 
-```{r readstata13-loading-dta-v2}
+```{r readstata13-loading-dta-v2,warning=FALSE}
 
-pd_readstata13_dta_v2 <- readstata13::read.dta13(path_to_dta,
+AB7_readstata13_dta_v2 <- readstata13::read.dta13(path_to_dta,
                                                  nonint.factors = TRUE)
 warnings()[1:2]
 
-class(pd_readstata13_dta_v2)
-class(pd_readstata13_dta_v2$Q1COVID19)
+class(AB7_readstata13_dta_v2)
+class(AB7_readstata13_dta_v2$Q101)
 
 ```
 
-There are far fewer warnings, and they have to do with missing or duplicated labels, not a lack thereof. You can also see the class of `pd_readstata13_dta_v2$Q1COVID19` is `"factor"` instead of `"numeric"`. Factors can be strings of numeric or alphabetic characters, so let's see what the variable looks like.
-
+There are far fewer warnings, and they have to do with missing or duplicated labels, not a lack thereof. You can also see the class of `AB7_readstata13_dta_v2$Q101` is `"factor"` instead of `"numeric"`. Factors can be strings of numeric or alphabetic characters, so let's see what the variable looks like.
 
 ```{r compare-v1-v2}
 
-table(pd_readstata13_dta_v1$Q1COVID19)
-table(pd_readstata13_dta_v2$Q1COVID19)
+table(AB7_readstata13_dta_v1$Q101)
+table(AB7_readstata13_dta_v2$Q101)
 
 ```
 
-For version 2, the labels associated with the file are now the factors. If the data was saved with the `haven` package, the `readstata13` package is not the best option to read it into R until the `haven` package adds a compression method. 
+For version 2, the labels associated with the file are now the factors. If the data was saved with the `haven` package, the `readstata13` package is not the best option to read it into R until the `haven` package adds a compression method.
 
-## Loading .sav files
+## Checks for Labels
 
-### Loading .sav file with haven
-```{r haven-loading-sav}
+### `haven` loaded
+```{r haven-loaded-label-checks}
 
-public_data_sav <- haven::read_sav(path_to_sav)
-
-class(public_data_sav)
-class(public_data_sav$Q1COVID19)
-
-```
-
-### Loading .sav file with `sjlabelled`
-
-```{r sjlabelled-loading-sav}
-
-pd_sjlabelled_sav <- sjlabelled::read_spss(path_to_sav)
-
-class(pd_sjlabelled_sav)
-class(pd_sjlabelled_sav$Q1COVID19)
+haven::is.labelled(AB7_haven_dta$Q101)
+sjlabelled::is_labelled(AB7_haven_dta$Q101)
+expss::is.labelled(AB7_haven_dta$Q101)
 
 ```
 
 
-### Loading .sav file with `expss`
+### `sjlabelled` loaded
+```{r sjlabelled-loaded-label-checks}
 
-```{r expss-loading-sav}
-
-pd_expss_sav <- expss::read_spss(path_to_sav)
-
-class(pd_expss_sav)
-class(pd_expss_sav$Q1COVID19)
+haven::is.labelled(AB7_sjlabelled_dta$Q101)
+sjlabelled::is_labelled(AB7_sjlabelled_dta$Q101)
+expss::is.labelled(AB7_sjlabelled_dta$Q101)
 
 ```

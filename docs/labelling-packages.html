@@ -23,7 +23,7 @@
 <meta name="author" content="MaryClare Roche" />
 
 
-<meta name="date" content="2022-11-30" />
+<meta name="date" content="2022-12-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,6 @@
   
 <link rel="prev" href="index.html"/>
 
-<script src="libs/header-attrs-2.18/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +49,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 
@@ -93,8 +93,8 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="labelling-packages" class="section level1" number="1">
-<h1><span class="header-section-number">Chapter 1</span> Labelling Packages</h1>
+<div id="labelling-packages" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">Chapter 1</span> Labelling Packages<a href="labelling-packages.html#labelling-packages" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>A list of packages that can be used to work with labeled data in R and links to their documentation:</p>
 <ul>
 <li><a href="https://cran.r-project.org/web/packages/haven/haven.pdf">haven</a>
@@ -139,6 +139,7 @@
 </ul></li>
 </ul>
 <p>All these packages have more functionality than what has been listed here. The points refer strictly to commonly used label-related functionality. The package <code>expss</code>, in particular, has extensive functionality to convert SPSS tools into R. Furthermore, the list above is by no means exhaustive. Packages like <code>foreign</code> and <code>readstata13</code> can read and write labeled data files. The package <code>Hmisc</code> has a function <code>label()</code> that gets/sets label attributes of an object. The four packages listed above, however, were all built specifically wih labeled data in mind, and thus they will be the focus of this book.</p>
+<p>You will also notice there is a lot of overlap in the functionality of these packages. While they often compliment each other, they can just as often step on each others’ toes. As such, I do not recommend loading all the packages whenever you want to work with labelled data in R. Rather, load the package you will rely on most (personal choice), then call specific functions from other packages as needed. This will help you keep track of which functions belong to which packages and make debugging your scripts much easier.</p>
 
 </div>
             </section>

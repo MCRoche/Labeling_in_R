@@ -1,1 +1,67 @@
-# A caucus-race and a long tale
+# Reading in Labelled Data: SPSS
+
+
++---------------+------------+-------------------+-------------+
+| Package       | Loads .sav | Checks for Labels | View Labels |
++===============+============+===================+=============+
+| `haven`       |  Yes       | Yes$^*$           | No          |
++---------------+------------+-------------------+-------------+
+| `labelled`    | No         | Yes$^*$           | Yes         |
++---------------+------------+-------------------+-------------+
+| `sjlabelled`  |  Yes       | Yes               | Yes         |
++---------------+------------+-------------------+-------------+
+| `expss`       | Yes        | Yes               | Yes         |
++---------------+------------+-------------------+-------------+
+| `foreign`     | Yes        | No                | No          |
++---------------+------------+-------------------+-------------+
+| `readstata13` | No         | No                | Yes         |
++---------------+------------+-------------------+-------------+
+| `Hmisc`       | No         | No                | Yes         |
++---------------+------------+-------------------+-------------+
+
+
+$^*$The function used to check for labels in the `haven` and `labelled` packages is the same.
+
+
+
+```{r drive-sav-path,echo=FALSE}
+
+path_to_sav <- "/Volumes/GoogleDrive/Shared drives/Arab Barometer/AB7/Data/RELEASE_DATA/Latest/AB7_ENG_Release_Version6.sav"
+
+```
+
+
+## Loading .sav files
+
+### Loading .sav file with haven
+
+```{r haven-loading-sav}
+
+public_data_sav <- haven::read_sav(path_to_sav)
+
+class(public_data_sav)
+class(public_data_sav$Q101)
+
+```
+
+### Loading .sav file with `sjlabelled`
+
+```{r sjlabelled-loading-sav}
+
+AB7_sjlabelled_sav <- sjlabelled::read_spss(path_to_sav)
+
+class(AB7_sjlabelled_sav)
+class(AB7_sjlabelled_sav$Q101)
+
+```
+
+### Loading .sav file with `expss`
+
+```{r expss-loading-sav}
+
+AB7_expss_sav <- expss::read_spss(path_to_sav)
+
+class(AB7_expss_sav)
+class(AB7_expss_sav$Q101)
+
+```
