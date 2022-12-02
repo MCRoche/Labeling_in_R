@@ -1,4 +1,4 @@
-# Labelling Packages
+# Labelling Packages {#chp-1}
 
 A list of packages that can be used to work with labeled data in R and links to their documentation:
 
