@@ -11,3 +11,12 @@
 dput(CityTemp_haven)
 
 ```
+
+
+### Loaded with `sjlabelled` {#appendix-CT-sjlabelled}
+
+```{r appendix-CT-sjlabelled}
+
+dput(CityTemp_sjlabelled)
+
+```
