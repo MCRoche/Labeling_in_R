@@ -1,0 +1,13 @@
+# Appendix {#appendix}
+
+# Data structures from [Chapter 2: Reading in Labelled Data: Stata](#chp-2)
+
+## City Temps {#appendix-CT}
+
+### Loaded with `haven` {#appendix-CT-haven}
+
+```{r appendix-CT-haven}
+
+dput(CityTemp_haven)
+
+```
