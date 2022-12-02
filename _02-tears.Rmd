@@ -152,6 +152,8 @@ Table: (\#tab:haven-see-labels) [Table 2](\#tab:labels-table) filled in with dat
 
 ## Loading .dta file with `sjlabelled`
 
+The CityTemp_haven data structure can be copied from [here](#appendix-CT-haven).
+
 ```{r sjlabelled-loading-dta}
 
 CityTemp_sjlabelled <- sjlabelled::read_stata("CityTemp.dta")
@@ -163,6 +165,8 @@ attributes(CityTemp_sjlabelled$division)
 str(CityTemp_sjlabelled$division)
 
 ```
+
+The `sjlabelled` package is not part of the tidyverse. We see the data read in by `sjlabelled::read_stata()` only belongs to the class `"data.frame"`. It is not a tibble. The variable `division` again as four attributes. The attributes are similar to those of the variable `division` when the data set is read in with `haven::read_dta()`. There are two notable differences. First, the class is `"factor"`. Since the variable is a factor, it has an attribute `levels`. Unlike 
 
 
 ### Checking labels of `sjlabelled` loaded data
