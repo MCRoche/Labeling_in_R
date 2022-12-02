@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 1 Labelling Packages | Labelling Data in R</title>
+  <meta name="description" content="Chapter 1 Labelling Packages | Labelling Data in R" />
+  <meta name="generator" content="bookdown 0.30 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 1 Labelling Packages | Labelling Data in R" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 1 Labelling Packages | Labelling Data in R" />
+  
+  
+  
+
+<meta name="author" content="MaryClare Roche" />
+
+
+<meta name="date" content="2022-12-02" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">R Labels</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Down the Rabbit-Hole</a></li>
+<li class="chapter" data-level="1" data-path="chp-1.html"><a href="chp-1.html"><i class="fa fa-check"></i><b>1</b> Labelling Packages</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Labelling Data in R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="chp-1" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">Chapter 1</span> Labelling Packages<a href="chp-1.html#chp-1" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>A list of packages that can be used to work with labeled data in R and links to their documentation:</p>
+<ul>
+<li><a href="https://cran.r-project.org/web/packages/haven/haven.pdf">haven</a>
+<ul>
+<li>Read and write labelled data (dta or sav)</li>
+<li>Create labelled vectors</li>
+<li>Check if an object is of class haven-labelled</li>
+<li>Convert from numeric value to label value</li>
+<li>Remove variable and value labels</li>
+<li><a href="https://haven.tidyverse.org/">Tidyverse page</a></li>
+</ul></li>
+<li><a href="https://cran.r-project.org/web/packages/labelled/labelled.pdf">labelled</a>
+<ul>
+<li>Create labelled vectors</li>
+<li>View variable and value labels</li>
+<li>Copy labels from one object to another</li>
+<li>Drop unused labels</li>
+<li>Remove variable and value labels</li>
+<li>Convert some factor data into labeled data</li>
+<li><a href="https://cran.r-project.org/web/packages/labelled/vignettes/intro_labelled.html"><code>labelled</code> vingette</a></li>
+</ul></li>
+<li><a href="https://cran.r-project.org/web/packages/sjlabelled/sjlabelled.pdf">sjlabelled</a>
+<ul>
+<li>Read and write labelled data (dta or sav)</li>
+<li>Create labelled vectors</li>
+<li>Check if an object is labelled class</li>
+<li>View variable and value labels</li>
+<li>Drops unused labels</li>
+<li>Fills in missing labels</li>
+<li>Rem oves one to all value labels</li>
+<li>Replace existing labels</li>
+<li><a href="https://strengejacke.github.io/sjlabelled/articles/labelleddata.html"><code>sjlabelled</code> vingette</a></li>
+</ul></li>
+<li><a href="https://cran.r-project.org/web/packages/expss/expss.pdf">expss</a>
+<ul>
+<li>For SPSS and Excel data</li>
+<li>Add label class to data</li>
+<li>Read and write labeled data for csv, xlsx, and sav formats</li>
+<li>Get/set/drop labels</li>
+<li>Recode vector into numeric type with labels</li>
+<li><a href="https://gdemin.github.io/expss/"><code>expss</code> website</a></li>
+</ul></li>
+</ul>
+<p>All these packages have more functionality than what has been listed here. The points refer strictly to commonly used label-related functionality. The package <code>expss</code>, in particular, has extensive functionality to convert SPSS tools into R. Furthermore, the list above is by no means exhaustive. Packages like <code>foreign</code> and <code>readstata13</code> can read and write labeled data files. The package <code>Hmisc</code> has a function <code>label()</code> that gets/sets label attributes of an object. The four packages listed above, however, were all built specifically wih labeled data in mind, and thus they will be the focus of this book.</p>
+<p>You will also notice there is a lot of overlap in the functionality of these packages. While they often compliment each other, they can just as often step on each others’ toes. As such, I do not recommend loading all the packages whenever you want to work with labelled data in R. Rather, load the package you will rely on most (personal choice), then call specific functions from other packages as needed. This will help you keep track of which functions belong to which packages and make debugging your scripts much easier.</p>
+<p>2 <code>1+1</code></p>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/MCRoche/Labeling_in_R/edit/master/01-package-list.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/MCRoche/Labeling_in_R/blob/master/01-package-list.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
