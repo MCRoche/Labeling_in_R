@@ -13,7 +13,7 @@ The first step to working with labeled data in R is loading a labeled data file,
 +---------------+--------------------------------+
 | `readstata13` | `read.dta13()` Past 12         |
 +---------------+--------------------------------+
-Table: Functions to read in Stata data
+Table: (\#tab:read-dta) Functions to read in Stata data
 
 
 +---------------+------------------+---------------------+-------------------+
@@ -27,7 +27,7 @@ Table: Functions to read in Stata data
 +---------------+------------------+---------------------+-------------------+
 | `readstata13` |  N/A             | `varlabel()`        | `get.label()`     |
 +---------------+------------------+---------------------+-------------------+
-Table: Functions to look at labels
+Table: (\#tab:labels-table) Functions to look at labels
 
 Stata can attach labels both to the variable name and the variable values. Packages that work with labels tend to check for variable and value labels separately.
 
@@ -37,6 +37,9 @@ Each section has a subsection that fills in the table of functions to look at la
 
 A note: The `haven` and `labelled` packages were written to work together, and thus inherit some functions from each other. In particular, `labelled::is.labelled()` is identical to `haven::is.labelled()`. Therefore, even though `haven` is a separate package, when it comes to checking for the existence of labels, we will only use `labelled` to avoid redundancy.
 
+Another note: If you do not want to gain a deeper understanding of how the various packages treat labeled data and just want to see which functions work with which data inputs, you can use the following links to skip to the answers.
+
+* [Answers to Tabel 2 with data read in with `haven::read_dta()`](\#tab:haven-see-labels)
 
 ## Loading .dta file with `haven`
 
@@ -46,7 +49,9 @@ The CityTemp_haven data structure can be copied from [here](#appendix-CT-haven).
 
 CityTemp_haven <- haven::read_dta("CityTemp.dta")
 
+names(attributes(CityTemp_haven))
 class(CityTemp_haven)
+
 attributes(CityTemp_haven$division)
 str(CityTemp_haven$division)
 
@@ -97,7 +102,35 @@ readstata13::varlabel(CityTemp_haven,"division")
 readstata13::get.label(CityTemp_haven,"division")
 ```
 
-Both the `labelled` and `sjlabelled` packages told us the variable `division` is labeled. It makes sense then that we can use their functions to look at the variable's labels. The `expss` function, on the other hand, told us the variable was not labeled, and yet we can still see the 
+Both the `labelled` and `sjlabelled` packages told us the variable `division` is labeled. It makes sense then that we can use their functions to look at the variable's labels. The `expss` function, on the other hand, told us the variable was not labeled, and yet we can still see the labels.
+
+It takes a little investigating, but eventually we can find that `labelled::var_label()`, `sjlabelled::get_label()`, and `expss::var_lab()` all fundamentally call the same method: `attr(x, "label", exact = TRUE)`. As long as an object's label is stored in an attribute called `"label"`, any of these functions will return the label.
+
+The same is basically true for the functions `labelled::val_labels()`, `sjlabelled::get_labels()`, and `expss::val_lab()`. All three functions call `attr(x, "labels", extract = TRUE)`. The function `sjlabelled::get_labels()` further processes the attributes, resulting in a slightly different output than `labelled::val_labels()` and `expss::val_lab()`. Ultimately, as long as the object's value labels are stored in an attribute called `"labels"`, any of these functions will return the value labels.
+
+The functions in the `readstata13` package are formulated differently. Trying to look at the variable label using `readstata13::varlabel()` throws an error. We can take a closer look at the function to see why.
+
+```{r readstata13-varlabel-haven}
+
+readstata13::varlabel
+
+```
+
+The third lines of the function is `varlabel <- attr(dat, "var.labels")`. We know from looking at `division`'s attributes earlier that it does not have an attribute called `"var.labels"`. When `attr(CityTemp, "var.labels")` is evaluated, the result is `r attr(CityTemp_haven, "var.labels")`, hence the error message `attempt to set an attribute on NULL`.
+
+The reason behind `readstata13::get.label()` returning `NULL` is similar. Let's look at the function.
+
+
+```{r readstata13-get.label-haven}
+
+readstata13::get.label
+
+```
+
+It turns out `readstata13::get.label()` is a straightforward wrapper function to call the label of a specific variable from the data attribute list. Again, we know that the variable `division` from the `CityTemp_haven` data does not have an attribute named `"label.table"`. When we run `attr(CityTemp_haven, "label.table")`, we get `r attr(CityTemp_haven, "label.table")`. Any indexing of `NULL` will simply return `NULL`. 
+
+
+With that, we can fill in our table for data read into R using the `haven` package.
 
 
 +---------------+------------------+---------------------+-------------------+
@@ -111,7 +144,7 @@ Both the `labelled` and `sjlabelled` packages told us the variable `division` is
 +---------------+------------------+---------------------+-------------------+
 | `readstata13` |  N/A             | ERROR               | FALSE             |
 +---------------+------------------+---------------------+-------------------+
-
+Table: (\#tab:haven-see-labels) [Table 2](\#tab:labels-table) filled in with data read in from `haven::read_dta()`
 
 
 
@@ -123,7 +156,9 @@ Both the `labelled` and `sjlabelled` packages told us the variable `division` is
 
 CityTemp_sjlabelled <- sjlabelled::read_stata("CityTemp.dta")
 
+names(attributes(CityTemp_sjlabelled))
 class(CityTemp_sjlabelled)
+
 attributes(CityTemp_sjlabelled$division)
 str(CityTemp_sjlabelled$division)
 
@@ -180,8 +215,11 @@ readstata13::get.label(CityTemp_sjlabelled,"division")
 
 CityTemp_readstata13 <- readstata13::read.dta13("CityTemp.dta")
 
+names(attributes(CityTemp_readstata13))
 class(CityTemp_readstata13)
-class(CityTemp_readstata13$division)
+
+attributes(CityTemp_readstata13$division)
+str(CityTemp_readstata13$division)
 
 ```
 
