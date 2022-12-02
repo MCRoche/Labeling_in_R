@@ -1,6 +1,6 @@
-# Reading in Labelled Data: Stata
+# Reading in Labelled Data: Stata {#chp-2}
 
-The first step to working with labeled data in R is loading a labeled data file, and making sure the labels are attached. Several of the packages in [Labelling Packages] have functions for loading labeled data while others have functions checking for labels. A few packages do both. The first table shows which packages read .dta files into R and their functions that do so. The second table shows which packages allow you to checkout the labels of the loaded data.
+The first step to working with labeled data in R is loading a labeled data file, and making sure the labels are attached. Several of the packages in [Chapter 1](#chp-1) have functions for loading labeled data while others have functions checking for labels. A few packages do both. The first table shows which packages read .dta files into R and their functions that do so. The second table shows which packages allow you to checkout the labels of the loaded data.
 
 +---------------+--------------------------------+
 | Package       | Function for loading .dta file |
@@ -17,8 +17,8 @@ Table: Functions to read in Stata data
 
 
 +---------------+------------------+---------------------+-------------------+
-| Package       |  Labels Exist    | View Variable Label | View Value Labels |
-+===============+=+================+=====================+===================+
+| Package       | Labels Exist     | View Variable Label | View Value Labels |
++===============+==================+=====================+===================+
 | `labelled`    | `is.labelled()`  | `var_label()`       | `val_labels()`    |
 +---------------+------------------+---------------------+-------------------+
 | `sjlabelled`  | `is_labelled()`  | `get_label()`       | `get_labels()`    |
@@ -29,12 +29,18 @@ Table: Functions to read in Stata data
 +---------------+------------------+---------------------+-------------------+
 Table: Functions to look at labels
 
-This chapter is organized as follows. Each section reads in .dta files according to a package: `haven`, `sjlabelled`, and `readstata13`. The `foreign` package is not covered because it is not updated for Stata files. Once the data is loaded, we look at the class of the data as well as the class and structure of a variable that *should* be labeled (hint: not all packages retain labels of the data). There are two data sets being read into R: the City Temp data that is included as example data in Stata, and the publicly available Arab Barometer Wave VII data^[which can be found [here](https://www.arabbarometer.org/survey-data/data-downloads/)]. The City Temp data was created in Stata, while the Arab Barometer Wave VII data was created in R, labeled in SPSS, and saved as a .dta file using the `haven` package.
+Stata can attach labels both to the variable name and the variable values. Packages that work with labels tend to check for variable and value labels separately.
+
+This chapter is organized as follows. Each section reads in .dta files according to a package: `haven`, `sjlabelled`, and `readstata13`. The `foreign` package is not covered as `foreign::read.dta()` is frozen and will not be updated to support Stata formats after 12. Once the data is loaded, we look at the class of the data as well as the class and structure of a variable that *should* be labeled (hint: not all packages retain labels of the data). The data used is City Temps, an example data frame found in Stata. The variable `division` has labeled numeric values. To follow along, you can find the structure of the data in the [Appendix](#appendix).
 
 Each section has a subsection that fills in the table of functions to look at labels. That is, a variable that should be labeled is passed into the function in the table and TRUE, FALSE, or ERROR is recorded in the table as a result. A FALSE result means labels should appear, but the function returns NULL. A ERROR result means even if the function is given proper syntax, an error occurs. This happens mostly commonly when the data is not of an appropriate class for the function.
 
+A note: The `haven` and `labelled` packages were written to work together, and thus inherit some functions from each other. In particular, `labelled::is.labelled()` is identical to `haven::is.labelled()`. Therefore, even though `haven` is a separate package, when it comes to checking for the existence of labels, we will only use `labelled` to avoid redundancy.
+
 
 ## Loading .dta file with `haven`
+
+The CityTemp_haven data structure can be copied from [here](#appendix-CT-haven).
 
 ```{r haven-loading-dta}
 
@@ -47,21 +53,37 @@ str(CityTemp_haven$division)
 
 ```
 
-
+Since the `haven` package is part of the tidyverse, `read_dta()` naturally reads in the data as a tibble. The variable `division` has four attributes: label, format.stata, class, and labels. Importantly, the variable belongs to the `"haven_labelled"` class. The `"haven_labelled"` class is another product of the tidyverse, so functions from outside the tidyverse may not work very well.
 
 ### Checking labels of `haven` loaded data
 
 
-```{r haven-loaded-labels-CT}
-# City Data
-## Labels Exist?
-haven::is.labelled(CityTemp_haven$division)
+```{r haven-loaded-labels-exist}
+
+labelled::is.labelled(CityTemp_haven$division)
 sjlabelled::is_labelled(CityTemp_haven$division)
 expss::is.labelled(CityTemp_haven$division)
+```
+
+According to the packages `labelled` and `sjlabelled`, the `division` variable is labeled, but the `expss` package cannot find any. Why? Let's look at what these functions are looking for.
+
+```{r label-existence}
+
+labelled::is.labelled
+
+sjlabelled::is_labelled
+
+expss::is.labelled
+
+```
+
+The function `labelled::is.labelled()` returns TRUE if the object is of the class `"haven_labelled"`. The function `sjlabelled::is_labelled()` returns TRUE if the object is of class `"haven_labelled"` **or** `"labelled"`. The function `expss::is.labelled` returns TRUE if the object is of the `"labelled"`. When we read in the data, we saw that the variable `division` belongs to the class `"haven_labelled"`, which causes `labelled::is.labelled()` and `sjlabelled::is_labelled()` to return TRUE, and `expss::is.labelled()` to return FALSE.
+
+The next step is to try to see the variable and value labels.
 
 
+```{r haven-loaded-labels-view}
 
-## View Labels
 labelled::var_label(CityTemp_haven$division)
 labelled::val_labels(CityTemp_haven$division)
 
@@ -74,6 +96,8 @@ expss::val_lab(CityTemp_haven$division)
 readstata13::varlabel(CityTemp_haven,"division")
 readstata13::get.label(CityTemp_haven,"division")
 ```
+
+Both the `labelled` and `sjlabelled` packages told us the variable `division` is labeled. It makes sense then that we can use their functions to look at the variable's labels. The `expss` function, on the other hand, told us the variable was not labeled, and yet we can still see the 
 
 
 +---------------+------------------+---------------------+-------------------+
@@ -113,7 +137,7 @@ str(CityTemp_sjlabelled$division)
 # City Data
 ## Labels Exist?
 
-haven::is.labelled(CityTemp_sjlabelled$division)
+labelled::is.labelled(CityTemp_sjlabelled$division)
 sjlabelled::is_labelled(CityTemp_sjlabelled$division)
 expss::is.labelled(CityTemp_sjlabelled$division)
 
@@ -166,7 +190,7 @@ class(CityTemp_readstata13$division)
 
 ```{r readstata13-loaded-label-checks-CT}
 # Labels Exist?
-haven::is.labelled(CityTemp_readstata13$division)
+labelled::is.labelled(CityTemp_readstata13$division)
 sjlabelled::is_labelled(CityTemp_readstata13$division)
 expss::is.labelled(CityTemp_readstata13$division)
 
@@ -187,43 +211,39 @@ readstata13::get.label(CityTemp_readstata13)
 ```
 
 
-+---------------+------------------+---------------------+-------------------+
-| Package       |  Labels Exist    | View Variable Label | View Value Labels |
-+===============+=+================+=====================+===================+
-| `labelled`    | FALSE            | FALSE               | FALSE             |
-+---------------+------------------+---------------------+-------------------+
-| `sjlabelled`  | FALSE            | FALSE               | TRUE              |
-+---------------+------------------+---------------------+-------------------+
-| `expss`       | FALSE            | FALSE               | FALSE             |
-+---------------+------------------+---------------------+-------------------+
-| `readstata13` |  N/A             | TRUE                | TRUE              |
-+---------------+------------------+---------------------+-------------------+
++---------------+--------------+---------------------+-------------------+
+| Package       | Labels Exist | View Variable Label | View Value Labels |
++===============+=+============+=====================+===================+
+| `labelled`    | FALSE        | FALSE               | FALSE             |
++---------------+--------------+---------------------+-------------------+
+| `sjlabelled`  | FALSE        | FALSE               | TRUE              |
++---------------+--------------+---------------------+-------------------+
+| `expss`       | FALSE        | FALSE               | FALSE             |
++---------------+--------------+---------------------+-------------------+
+| `readstata13` |  N/A         | TRUE                | TRUE              |
++---------------+--------------+---------------------+-------------------+
 
 
-## City Temp Data
+## Function Cohesion Summary
 ### Variable Labels
-+---------------------------------+-------------------------+---------------------------+--------------------+-------------------------+
-| City Temp Data                  | `labelled::var_label()` | `sjlabelled::get_label()` | `expss::var_lab()` | `readstata13::varlab()` |
-+=================================+=========================+===========================+====================+=========================+
-| `haven::read_dta()`             | TRUE                    | TRUE                      | TRUE               | FRROR                   |
-+---------------------------------+-------------------------+---------------------------+--------------------+-------------------------+
-| `sjlabelled::read_stata()`      | TRUE                    | TRUE                      | TRUE               | ERROR                   |
-+---------------------------------+-------------------------+---------------------------+--------------------+-------------------------+
-| `readstata13::read.dta13()`, V1 | FALSE                   | FALSE                     | FALSE              | FALSE                   |
-+---------------------------------+-------------------------+---------------------------+--------------------+-------------------------+
-| `readstata13::read.dta13()`, V2 | FALSE                   | FALSE                     | FALSE              | TRUE                    |
-+---------------------------------+-------------------------+---------------------------+--------------------+-------------------------+
++-----------------------------+-------------------------+---------------------------+--------------------+-------------------------+
+| City Temp Data              | `labelled::var_label()` | `sjlabelled::get_label()` | `expss::var_lab()` | `readstata13::varlab()` |
++=============================+=========================+===========================+====================+=========================+
+| `haven::read_dta()`         | TRUE                    | TRUE                      | TRUE               | ERROR                   |
++-----------------------------+-------------------------+---------------------------+--------------------+-------------------------+
+| `sjlabelled::read_stata()`  | TRUE                    | TRUE                      | TRUE               | ERROR                   |
++-----------------------------+-------------------------+---------------------------+--------------------+-------------------------+
+| `readstata13::read.dta13()` | FALSE                   | FALSE                     | FALSE              | FALSE                   |
++-----------------------------+-------------------------+---------------------------+--------------------+-------------------------+
 
 ### Value Labels
-+---------------------------------+--------------------------+----------------------------+--------------------+----------------------------+
-| City Temp Data                  | `labelled::val_labels()` | `sjlabelled::get_labels()` | `expss::val_lab()` | `readstata13::get.label()` |
-+=================================+==========================+============================+====================+============================+
-| `haven::read_dta()`             | FALSE                    | TRUE                       | TRUE               | FALSE                      |
-+---------------------------------+--------------------------+----------------------------+--------------------+----------------------------+
-| `sjlabelled::read_stata()`      | FALSE                    | TRUE                       | TRUE               | FALSE                      |
-+---------------------------------+--------------------------+----------------------------+--------------------+----------------------------+
-| `readstata13::read.dta13()`, V1 | FALSE                    | FALSE                      | FALSE              | FALSE                      |
-+---------------------------------+--------------------------+----------------------------+--------------------+----------------------------+
-| `readstata13::read.dta13()`, V2 | FALSE                    | TRUE                       | FALSE              | TRUE                       |
-+---------------------------------+--------------------------+----------------------------+--------------------+----------------------------+
++---------------------------- +--------------------------+----------------------------+--------------------+----------------------------+
+| City Temp Data              | `labelled::val_labels()` | `sjlabelled::get_labels()` | `expss::val_lab()` | `readstata13::get.label()` |
++=============================+==========================+============================+====================+============================+
+| `haven::read_dta()`         | FALSE                    | TRUE                       | TRUE               | FALSE                      |
++-----------------------------+--------------------------+----------------------------+--------------------+----------------------------+
+| `sjlabelled::read_stata()`  | FALSE                    | TRUE                       | TRUE               | FALSE                      |
++-----------------------------+--------------------------+----------------------------+--------------------+----------------------------+
+| `readstata13::read.dta13()` | FALSE                    | FALSE                      | FALSE              | FALSE                      |
++-----------------------------+--------------------------+----------------------------+--------------------+----------------------------+
 
