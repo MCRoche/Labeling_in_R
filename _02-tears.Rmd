@@ -236,6 +236,7 @@ Now, we can fill in [Table 2](\#tab:labels-table) for data read in by `sjlabelle
 
 ## Loading .dta file with `readstata13`
 
+The final examination of this chapter is data read in by `readstata13::read.dta13()`. The `CityTemp_readstata13` data structure can be copied from [here](#appendix-CT-readstata13).
 
 ```{r readstata13-loading-CT}
 
@@ -249,26 +250,31 @@ str(CityTemp_readstata13$division)
 
 ```
 
+It is immediately clear that data read into R by `readstata13::read.dta13()` has an entirely different structure than data read in by `haven::read_dta()` or `sjlabelled::read_stata()`. The data frame `CityTemp_readstata13` has 14 attributes instead of four like `CityTemp_haven` or three like `CityTemp_sjlabelled`. Inversely, its variable `division` only has two attributes, `levels` and `class`, compared to the four the variables from `CityTemp_haven` and `CityTemp_sjlabelled` have. Notice that `division` has neither a `label` nor `labels` attribute, and belongs to the class `"factor"`.
 
-### Checking labels of `readstata13` loaded data
 
-```{r readstata13-loaded-label-checks-CT}
-# Labels Exist?
+#### Label Existence {#label-exist-readstata13}
+
+```{r sjlabelled-loaded-labels-readstata13}
+
 labelled::is.labelled(CityTemp_readstata13$division)
 sjlabelled::is_labelled(CityTemp_readstata13$division)
 expss::is.labelled(CityTemp_readstata13$division)
+```
 
-# View Labels
+```{r}
+
 labelled::var_label(CityTemp_readstata13$division)
-labelled::val_labels(CityTemp_readstata13$division)
-
 sjlabelled::get_label(CityTemp_readstata13$division)
-sjlabelled::get_labels(CityTemp_readstata13$division)
-
 expss::var_lab(CityTemp_readstata13$division)
-expss::val_lab(CityTemp_readstata13$division)
-
 readstata13::get.label.name(CityTemp_readstata13)
+```
+
+
+```{r}
+labelled::val_labels(CityTemp_readstata13$division)
+sjlabelled::get_labels(CityTemp_readstata13$division)
+expss::val_lab(CityTemp_readstata13$division)
 readstata13::get.label(CityTemp_readstata13)
 
 
