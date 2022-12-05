@@ -20,3 +20,13 @@ dput(CityTemp_haven)
 dput(CityTemp_sjlabelled)
 
 ```
+
+
+
+### Loaded with `readstata13` {#appendix-CT-readstata13}
+
+```{r appendix-CT-readstata13}
+
+dput(CityTemp_readstata13)
+
+```
