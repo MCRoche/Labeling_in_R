@@ -39,9 +39,16 @@ A note: The `haven` and `labelled` packages were written to work together, and t
 
 Another note: If you do not want to gain a deeper understanding of how the various packages treat labeled data and just want to see which functions work with which data inputs, you can use the following links to skip to the answers.
 
-* [Answers to Tabel 2 with data read in with `haven::read_dta()`](\#tab:haven-see-labels)
-* [Answers to Tabel 2 with data read in with `sjlabelled::read_stata()`](\#tab:sjlabelled-see-labels)
-* [Answers to Tabel 2 with data read in with `readstata13::read.dta13()`](\#tab:readstata13-see-labels)
+* [Answers to Tabel 2.2 with data read in with `haven::read_dta()`](\#tab:haven-label-table)
+* [Answers to Tabel 2.2 with data read in with `sjlabelled::read_stata()`](\#tab:sjlabelled-label-table)
+* [Answers to Tabel 2.2 with data read in with `readstata13::read.dta13()`](\#tab:readstata13-see-labels)
+
+
+```{r package-column, echo=FALSE,results="hide"}
+
+Package_Column <- c("haven","sjlabelled","expss","readstata13")
+
+```
 
 ## Loading .dta file with `haven`
 
@@ -72,6 +79,13 @@ expss::is.labelled(CityTemp_haven$division)
 
 ```
 
+
+```{r haven-labels-exist-column, echo=FALSE,results="hide"}
+
+Labels_Exist_haven <- c(TRUE,TRUE,FALSE,NA)
+
+```
+
 According to the packages `labelled` and `sjlabelled`, the `division` variable is labeled, but the `expss` package cannot find any. Why? Let's look at what these functions are looking for.
 
 ```{r label-existence}
@@ -96,6 +110,12 @@ labelled::var_label(CityTemp_haven$division)
 sjlabelled::get_label(CityTemp_haven$division)
 expss::var_lab(CityTemp_haven$division)
 readstata13::varlabel(CityTemp_haven,"division")
+
+```
+
+```{r haven-variable-label-column, echo=FALSE,results="hide"}
+
+Variable_Label_haven <- c(TRUE,TRUE,FALSE,"ERROR")
 
 ```
 
@@ -125,6 +145,12 @@ readstata13::get.label(CityTemp_haven,"division")
 
 ```
 
+```{r haven-value-label-column, echo=FALSE,results="hide"}
+
+Value_Label_haven <- c(TRUE,TRUE,TRUE,FALSE)
+
+```
+
 The same pattern seen for variable labels is repeated for value labels. The functions from the packages `labelled`, `sjlabelled`, and `expss` all return the value labels, even though `expss::is.labelled()` returned FALSE. While `readstata13::get.label()` does not throw an error, it returns `NULL`.
 
 The functions `labelled::val_labels()`, `sjlabelled::get_labels()`, and `expss::val_lab()` are internally very similair to their variable label function counterparts. All three functions call `attr(x, "labels", extract = TRUE)`. The function `sjlabelled::get_labels()` further processes the attributes, resulting in a slightly different output than `labelled::val_labels()` and `expss::val_lab()`.  Notably, `labelled::val_labels()` only does this if the object belongs to either the `"haven_labelled"` class or the `"data.frame"` class. Otherwise, it will just return `NULL`.
@@ -144,21 +170,26 @@ It turns out `readstata13::get.label()` is a straightforward wrapper function to
 
 With that, we can fill in our table for data read into R using the `haven` package.
 
+```{r haven-label-table,echo=FALSE}
+library(kableExtra)
 
-+---------------+------------------+---------------------+-------------------+
-| Package       |  Labels Exist    | View Variable Label | View Value Labels |
-+===============+=+================+=====================+===================+
-| `labelled`    | TRUE             | TRUE                | TRUE              |
-+---------------+------------------+---------------------+-------------------+
-| `sjlabelled`  | TRUE             | TRUE                | TRUE              |
-+---------------+------------------+---------------------+-------------------+
-| `expss`       | FALSE            | TRUE                | TRUE              |
-+---------------+------------------+---------------------+-------------------+
-| `readstata13` |  N/A             | ERROR               | FALSE             |
-+---------------+------------------+---------------------+-------------------+
-Table: (\#tab:haven-see-labels) [Table 2](\#tab:labels-table) filled in with data read in from `haven::read_dta()`
+haven_label_table <- data.frame(
+  Package_Column,
+  Labels_Exist_haven,
+  Variable_Label_haven,
+  Value_Label_haven
+  )
 
+kbl(haven_label_table,
+    col.names = c("Package",
+                  "Labels Exists",
+                  "Variable Labels", 
+                  "Value Label"),
+    caption = "Table 2.2 filled in with data read in by `haven::read_dta()`",
+    booktabs = TRUE) %>%
+  kable_styling(bootstrap_options = "hover")
 
+```
 
 
 
@@ -191,6 +222,13 @@ expss::is.labelled(CityTemp_sjlabelled$division)
 
 ```
 
+
+```{r sjlabelled-labels-exist-column, echo=FALSE,results="hide"}
+
+Labels_Exist_sjlabelled <- c(FALSE,FALSE,FALSE,NA)
+
+```
+
 All three functions return FALSE. This should not be surprising, since the variable `division` in this case does not belong to either the `"haven_labelled"` class or the `"labelled"` class. Thus, even when the user the `sjlabelled` package to load the data and check for labels, `sjlabelled` will return that the data is not labeled.
 
 ### Variable Labels {#var-lab-sjlabelled}
@@ -200,6 +238,13 @@ labelled::var_label(CityTemp_sjlabelled$division)
 sjlabelled::get_label(CityTemp_sjlabelled$division)
 expss::var_lab(CityTemp_sjlabelled$division)
 readstata13::varlabel(CityTemp_sjlabelled,"division")
+```
+
+
+```{r sjlabelled-variable-label-column, echo=FALSE,results="hide"}
+
+Variable_Label_sjlabelled <- c(TRUE,TRUE,TRUE,"ERROR")
+
 ```
 
 Just as with the `haven` loaded data, the first three functions return the variable label, while the `readstata13::varlabel()` throws an error. The reasoning is exactly the same as explained in section (#var-lab-haven): `labelled::var_label()`, `sjlabelled::get_label()`, and `expss::var_lab()` all look for an attribute `label`, while `readstata13::varlabel()` looks for an attribute `var.label`. The former exists while the latter does not.
@@ -215,25 +260,39 @@ readstata13::get.label(CityTemp_sjlabelled,"division")
 
 ```
 
+
+```{r sjlabelled-value-label-column, echo=FALSE,results="hide"}
+
+Value_Label_sjlabelled <- c(FALSE,TRUE,TRUE,FALSE)
+
+```
+
 In a turn of events, `sjlabelled::get_labels()` and `expss::val_lab()` return value labels, while both `labelled::val_labels()` and `readstata13::get.label()` return `NULL`. But... the functions from `sjlabelled`, `expss` *and* `labelled` are supposed to return the value of the `labels` attribute, right? WRONG. Recall: `labelled::val_labels()` will only return the value of the object's `labels` attribute **if the object belongs to the `"haven_labelled"` or `"data.frame"` class.** Otherwise, it will return `NULL`, as it does in this case. The variable `division` from the `CityTemp_sjlabelled` data only belongs to the `"factor"` class, so `labelled::val_labels()` returns `NULL`.
 
 The function `readstata13::get.label()` runs into the same problem as before; namely, the data `CityTemp_sjlabelled` does not have an attribute `"label.table"`.
 
-Now, we can fill in [Table 2](\#tab:labels-table) for data read in by `sjlabelled::read_stata()`.
+Now, we can fill in [Table 2.2](\#tab:labels-table) for data read in by `sjlabelled::read_stata()`.
 
-+---------------+------------------+---------------------+-------------------+
-| Package       |  Labels Exist    | View Variable Label | View Value Labels |
-+===============+=+================+=====================+===================+
-| `labelled`    | FALSE            | TRUE                | FALSE             |
-+---------------+------------------+---------------------+-------------------+
-| `sjlabelled`  | FALSE            | TRUE                | TRUE              |
-+---------------+------------------+---------------------+-------------------+
-| `expss`       | FALSE            | TRUE                | TRUE              |
-+---------------+------------------+---------------------+-------------------+
-| `readstata13` |  N/A             | ERROR               | FALSE             |
-+---------------+------------------+---------------------+-------------------+
-Table: (\#tab:sjlabelled-see-labels) [Table 2](\#tab:labels-table) filled in with data read in from `sjlabelled::read_stata()`
+```{r sjlabelled-label-table,echo=FALSE}
+library(kableExtra)
 
+sjlabelled_label_table <- data.frame(
+  Package_Column,
+  Labels_Exist_sjlabelled,
+  Variable_Label_sjlabelled,
+  Value_Label_sjlabelled
+  )
+
+kbl(sjlabelled_label_table,
+    col.names = c("Package",
+                  "Labels Exists",
+                  "Variable Labels", 
+                  "Value Label"),
+    caption = "Table 2.2 filled in with data read in by `sjlabelled::read_stata()`",
+    booktabs = TRUE) %>%
+  kable_styling(bootstrap_options = "hover")
+
+```
 
 
 ## Loading .dta file with `readstata13`
@@ -257,11 +316,17 @@ It is immediately clear that data read into R by `readstata13::read.dta13()` has
 
 ### Label Existence {#label-exist-readstata13}
 
-```{r sjlabelled-loaded-labels-readstata13}
+```{r readstata13-loaded-labels}
 
 labelled::is.labelled(CityTemp_readstata13$division)
 sjlabelled::is_labelled(CityTemp_readstata13$division)
 expss::is.labelled(CityTemp_readstata13$division)
+
+```
+
+```{r readstata13-labels-exist-column, echo=FALSE,results="hide"}
+
+Labels_Exist_readstata13 <- c(FALSE,FALSE,FALSE,NA)
 
 ```
 
@@ -274,6 +339,13 @@ labelled::var_label(CityTemp_readstata13$division)
 sjlabelled::get_label(CityTemp_readstata13$division)
 expss::var_lab(CityTemp_readstata13$division)
 readstata13::varlabel(CityTemp_readstata13,"division")
+
+```
+
+
+```{r readstata13-variable-label-column, echo=FALSE,results="hide"}
+
+Variable_Label_readstata13 <- c(FALSE,FALSE,FALSE,TRUE)
 
 ```
 
@@ -291,26 +363,42 @@ readstata13::get.label(CityTemp_readstata13,"division")
 
 ```
 
+```{r readstata13-value-label-column, echo=FALSE,results="hide"}
+
+Value_Label_readstata13 <- c(FALSE,TRUE,FALSE,TRUE)
+
+```
+
 Neither `labelled::val_labels()` nor `expss::val_lab()` return value labels. Recall both functions are looking for the attribute `labels`, which `division` in this case does not have.
 
 The `sjlabelled::get_labels()` function, on the other hand, *does* return value labels. Huh? Didn't we establish that `sjlabelled::get_labels()` also looks for the `labels` attribute, just like the others? Yes. **But**, recall it was also mentioned that `sjlabelled::get_labels()` is a bit more complicated than `labelled::val_labels()` and `expss::val_lab()`. Unlike the other two functions, if `sjlabelled::get_labels()` does not see a `labels` attributes, it will look for factor levels. Here, `division` belongs to the `"factor"` class and has a ``"levels"` attribute, so `sjlabelled::get_labels()` returns the factor levels as value labels.
 
 Finally, `readstata13::get.label()` returns the values labels for `division`. The data frame `CityTemp_readstata13` has a `"label.tabel"` attribute. From that attribute, `readstata13::get.label()` can look up the value labels specific to `division`.
 
-With that, we can fill out our final iteration of [Table 2](\#tab:labels-table).
+With that, we can fill out our final iteration of [Table 2.2](\#tab:labels-table).
 
-+---------------+--------------+---------------------+-------------------+
-| Package       | Labels Exist | View Variable Label | View Value Labels |
-+===============+=+============+=====================+===================+
-| `labelled`    | FALSE        | FALSE               | FALSE             |
-+---------------+--------------+---------------------+-------------------+
-| `sjlabelled`  | FALSE        | FALSE               | TRUE              |
-+---------------+--------------+---------------------+-------------------+
-| `expss`       | FALSE        | FALSE               | FALSE             |
-+---------------+--------------+---------------------+-------------------+
-| `readstata13` |  N/A         | TRUE                | TRUE              |
-+---------------+--------------+---------------------+-------------------+
-Table: (\#tab:readstata13-see-labels) [Table 2](\#tab:labels-table) filled in with data read in from `readstata13::read.dta13()`
+
+```{r readstata13-label-table,echo=FALSE}
+library(kableExtra)
+
+readstata13_label_table <- data.frame(
+  Package_Column,
+  Labels_Exist_readstata13,
+  Variable_Label_readstata13,
+  Value_Label_readstata13
+  )
+
+kbl(readstata13_label_table,
+    col.names = c("Package",
+                  "Labels Exists",
+                  "Variable Labels", 
+                  "Value Label"),
+    caption = "Table 2.2 filled in with data read in by `readstata13::read.dta13()`",
+    booktabs = TRUE) %>%
+  kable_styling(bootstrap_options = "hover")
+
+```
+
 
 ## Function Cohesion Summary
 
@@ -328,7 +416,7 @@ Table: (\#tab:readstata13-see-labels) [Table 2](\#tab:labels-table) filled in wi
 +-----------------------------+-------------------------+---------------------------+--------------------+-------------------------+
 
 ### Value Labels
-+---------------------------- +--------------------------+----------------------------+--------------------+----------------------------+
++-----------------------------+--------------------------+----------------------------+--------------------+----------------------------+
 | City Temp Data              | `labelled::val_labels()` | `sjlabelled::get_labels()` | `expss::val_lab()` | `readstata13::get.label()` |
 +=============================+==========================+============================+====================+============================+
 | `haven::read_dta()`         | FALSE                    | TRUE                       | TRUE               | FALSE                      |

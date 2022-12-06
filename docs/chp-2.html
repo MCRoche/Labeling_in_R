@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Reading in Labelled Data: Stata | Labelling Data in R</title>
+  <meta name="description" content="Chapter 2 Reading in Labelled Data: Stata | Labelling Data in R" />
+  <meta name="generator" content="bookdown 0.30 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Reading in Labelled Data: Stata | Labelling Data in R" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Reading in Labelled Data: Stata | Labelling Data in R" />
+  
+  
+  
+
+<meta name="author" content="MaryClare Roche" />
+
+
+<meta name="date" content="2022-12-06" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="chp-1.html"/>
+<link rel="next" href="appendix.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">R Labels</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Down the Rabbit-Hole</a></li>
+<li class="chapter" data-level="1" data-path="chp-1.html"><a href="chp-1.html"><i class="fa fa-check"></i><b>1</b> Labelling Packages</a></li>
+<li class="chapter" data-level="2" data-path="chp-2.html"><a href="chp-2.html"><i class="fa fa-check"></i><b>2</b> Reading in Labelled Data: Stata</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="chp-2.html"><a href="chp-2.html#loading-.dta-file-with-haven"><i class="fa fa-check"></i><b>2.1</b> Loading .dta file with <code>haven</code></a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="chp-2.html"><a href="chp-2.html#label-exist-haven"><i class="fa fa-check"></i><b>2.1.1</b> Label Existence</a></li>
+<li class="chapter" data-level="2.1.2" data-path="chp-2.html"><a href="chp-2.html#var-lab-haven"><i class="fa fa-check"></i><b>2.1.2</b> Variable Labels</a></li>
+<li class="chapter" data-level="2.1.3" data-path="chp-2.html"><a href="chp-2.html#val-labl-haven"><i class="fa fa-check"></i><b>2.1.3</b> Value Labels</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="chp-2.html"><a href="chp-2.html#loading-.dta-file-with-sjlabelled"><i class="fa fa-check"></i><b>2.2</b> Loading .dta file with <code>sjlabelled</code></a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="chp-2.html"><a href="chp-2.html#label-exist-sjlabelled"><i class="fa fa-check"></i><b>2.2.1</b> Label Existence</a></li>
+<li class="chapter" data-level="2.2.2" data-path="chp-2.html"><a href="chp-2.html#var-lab-sjlabelled"><i class="fa fa-check"></i><b>2.2.2</b> Variable Labels</a></li>
+<li class="chapter" data-level="2.2.3" data-path="chp-2.html"><a href="chp-2.html#val-lab-sjlabelled"><i class="fa fa-check"></i><b>2.2.3</b> Value Labels</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="chp-2.html"><a href="chp-2.html#loading-.dta-file-with-readstata13"><i class="fa fa-check"></i><b>2.3</b> Loading .dta file with <code>readstata13</code></a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="chp-2.html"><a href="chp-2.html#label-exist-readstata13"><i class="fa fa-check"></i><b>2.3.1</b> Label Existence</a></li>
+<li class="chapter" data-level="2.3.2" data-path="chp-2.html"><a href="chp-2.html#var-lab-readstata13"><i class="fa fa-check"></i><b>2.3.2</b> Variables Labels</a></li>
+<li class="chapter" data-level="2.3.3" data-path="chp-2.html"><a href="chp-2.html#val-lab-readstata13"><i class="fa fa-check"></i><b>2.3.3</b> Value Labels</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="chp-2.html"><a href="chp-2.html#function-cohesion-summary"><i class="fa fa-check"></i><b>2.4</b> Function Cohesion Summary</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="chp-2.html"><a href="chp-2.html#variable-labels"><i class="fa fa-check"></i><b>2.4.1</b> Variable Labels</a></li>
+<li class="chapter" data-level="2.4.2" data-path="chp-2.html"><a href="chp-2.html#value-labels"><i class="fa fa-check"></i><b>2.4.2</b> Value Labels</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>3</b> Appendix</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="appendix.html"><a href="appendix.html#data-structures-from-chapter-2-reading-in-labelled-data-stata"><i class="fa fa-check"></i><b>3.1</b> Data structures from Chapter 2: Reading in Labelled Data: Stata</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="appendix.html"><a href="appendix.html#appendix-CT"><i class="fa fa-check"></i><b>3.1.1</b> City Temps</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Labelling Data in R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="chp-2" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Reading in Labelled Data: Stata<a href="chp-2.html#chp-2" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>The first step to working with labeled data in R is loading a labeled data file, and making sure the labels are attached. Several of the packages in <a href="chp-1.html#chp-1">Chapter 1</a> have functions for loading labeled data while others have functions checking for labels. A few packages do both. The first table shows which packages read .dta files into R and their functions that do so. The second table shows which packages allow you to checkout the labels of the loaded data.</p>
+<table style="width:68%;">
+<caption><span id="tab:read-dta">Table 2.1: </span> Functions to read in Stata data</caption>
+<colgroup>
+<col width="22%" />
+<col width="45%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Package</th>
+<th>Function for loading .dta file</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>haven</code></td>
+<td><code>read_dta()</code></td>
+</tr>
+<tr class="even">
+<td><code>sjlabelled</code></td>
+<td><code>read_stata()</code></td>
+</tr>
+<tr class="odd">
+<td><code>foreign</code></td>
+<td><code>read.dta()</code> Up to 12</td>
+</tr>
+<tr class="even">
+<td><code>readstata13</code></td>
+<td><code>read.dta13()</code> Past 12</td>
+</tr>
+</tbody>
+</table>
+<table style="width:97%;">
+<caption><span id="tab:labels-table">Table 2.2: </span> Functions to look at labels</caption>
+<colgroup>
+<col width="20%" />
+<col width="24%" />
+<col width="27%" />
+<col width="25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Package</th>
+<th>Labels Exist</th>
+<th>View Variable Label</th>
+<th>View Value Labels</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>labelled</code></td>
+<td><code>is.labelled()</code></td>
+<td><code>var_label()</code></td>
+<td><code>val_labels()</code></td>
+</tr>
+<tr class="even">
+<td><code>sjlabelled</code></td>
+<td><code>is_labelled()</code></td>
+<td><code>get_label()</code></td>
+<td><code>get_labels()</code></td>
+</tr>
+<tr class="odd">
+<td><code>expss</code></td>
+<td><code>is.labelled()</code></td>
+<td><code>var_lab()</code></td>
+<td><code>val_lab()</code></td>
+</tr>
+<tr class="even">
+<td><code>readstata13</code></td>
+<td>N/A</td>
+<td><code>varlabel()</code></td>
+<td><code>get.label()</code></td>
+</tr>
+</tbody>
+</table>
+<p>Stata can attach labels both to the variable name and the variable values. Packages that work with labels tend to check for variable and value labels separately.</p>
+<p>This chapter is organized as follows. Each section reads in .dta files according to a package: <code>haven</code>, <code>sjlabelled</code>, and <code>readstata13</code>. The <code>foreign</code> package is not covered as <code>foreign::read.dta()</code> is frozen and will not be updated to support Stata formats after 12. Once the data is loaded, we look at the class of the data as well as the class and structure of a variable that <em>should</em> be labeled (hint: not all packages retain labels of the data). The data used is City Temps, an example data frame found in Stata. The variable <code>division</code> has labeled numeric values. To follow along, you can find the structure of the data in the <a href="appendix.html#appendix">Appendix</a>.</p>
+<p>Each section has a subsection that fills in the table of functions to look at labels. That is, a variable that should be labeled is passed into the function in the table and TRUE, FALSE, or ERROR is recorded in the table as a result. A FALSE result means labels should appear, but the function returns NULL. A ERROR result means even if the function is given proper syntax, an error occurs. This happens mostly commonly when the data is not of an appropriate class for the function.</p>
+<p>A note: The <code>haven</code> and <code>labelled</code> packages were written to work together, and thus inherit some functions from each other. In particular, <code>labelled::is.labelled()</code> is identical to <code>haven::is.labelled()</code>. Therefore, even though <code>haven</code> is a separate package, when it comes to checking for the existence of labels, we will only use <code>labelled</code> to avoid redundancy.</p>
+<p>Another note: If you do not want to gain a deeper understanding of how the various packages treat labeled data and just want to see which functions work with which data inputs, you can use the following links to skip to the answers.</p>
+<ul>
+<li><a href="chp-2.html#tab:haven-label-table">Answers to Tabel 2.2 with data read in with <code>haven::read_dta()</code></a></li>
+<li><a href="chp-2.html#tab:sjlabelled-label-table">Answers to Tabel 2.2 with data read in with <code>sjlabelled::read_stata()</code></a></li>
+<li><a href="#tab:readstata13-see-labels">Answers to Tabel 2.2 with data read in with <code>readstata13::read.dta13()</code></a></li>
+</ul>
+<div id="loading-.dta-file-with-haven" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Loading .dta file with <code>haven</code><a href="chp-2.html#loading-.dta-file-with-haven" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The CityTemp_haven data structure can be copied from <a href="appendix.html#appendix-CT-haven">here</a>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="chp-2.html#cb1-1" aria-hidden="true" tabindex="-1"></a>CityTemp_haven <span class="ot">&lt;-</span> haven<span class="sc">::</span><span class="fu">read_dta</span>(<span class="st">&quot;CityTemp.dta&quot;</span>)</span>
+<span id="cb1-2"><a href="chp-2.html#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="chp-2.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(<span class="fu">attributes</span>(CityTemp_haven))</span></code></pre></div>
+<pre><code>## [1] &quot;class&quot;     &quot;row.names&quot; &quot;label&quot;     &quot;names&quot;</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="chp-2.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(CityTemp_haven)</span></code></pre></div>
+<pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="chp-2.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(CityTemp_haven<span class="sc">$</span>division)</span></code></pre></div>
+<pre><code>## $label
+## [1] &quot;Census division&quot;
+## 
+## $format.stata
+## [1] &quot;%16.0g&quot;
+## 
+## $class
+## [1] &quot;haven_labelled&quot; &quot;vctrs_vctr&quot;     &quot;double&quot;        
+## 
+## $labels
+##   N Eng Mid Atl     ENC     WNC   S Atl     ESC     WSC     Mtn Pacific 
+##       1       2       3       4       5       6       7       8       9</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="chp-2.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(CityTemp_haven<span class="sc">$</span>division)</span></code></pre></div>
+<pre><code>##  dbl+lbl [1:956] 1, 1, 2, 1, 1, 2, 2, 1, 2, 2, 1, 2, 2, 1, 2, 2, 1,...
+##  @ label       : chr &quot;Census division&quot;
+##  @ format.stata: chr &quot;%16.0g&quot;
+##  @ labels      : Named num [1:9] 1 2 3 4 5 6 7 8 9
+##   ..- attr(*, &quot;names&quot;)= chr [1:9] &quot;N Eng&quot; &quot;Mid Atl&quot; &quot;ENC&quot; &quot;WNC&quot; ...</code></pre>
+<p>Since the <code>haven</code> package is part of the tidyverse, <code>read_dta()</code> naturally reads in the data as a tibble. The variable <code>division</code> has four attributes: label, format.stata, class, and labels. Importantly, the variable belongs to the <code>"haven_labelled"</code> class. The <code>"haven_labelled"</code> class is another product of the tidyverse, so functions from outside the tidyverse may not work very well.</p>
+<div id="label-exist-haven" class="section level3 hasAnchor" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> Label Existence<a href="chp-2.html#label-exist-haven" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="chp-2.html#cb9-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">is.labelled</span>(CityTemp_haven<span class="sc">$</span>division)</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="chp-2.html#cb11-1" aria-hidden="true" tabindex="-1"></a>sjlabelled<span class="sc">::</span><span class="fu">is_labelled</span>(CityTemp_haven<span class="sc">$</span>division)</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="chp-2.html#cb13-1" aria-hidden="true" tabindex="-1"></a>expss<span class="sc">::</span><span class="fu">is.labelled</span>(CityTemp_haven<span class="sc">$</span>division)</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<p>According to the packages <code>labelled</code> and <code>sjlabelled</code>, the <code>division</code> variable is labeled, but the <code>expss</code> package cannot find any. Why? Let’s look at what these functions are looking for.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="chp-2.html#cb15-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span>is.labelled</span></code></pre></div>
+<pre><code>## function (x) 
+## inherits(x, &quot;haven_labelled&quot;)
+## &lt;bytecode: 0x7fc916a31200&gt;
+## &lt;environment: namespace:haven&gt;</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="chp-2.html#cb17-1" aria-hidden="true" tabindex="-1"></a>sjlabelled<span class="sc">::</span>is_labelled</span></code></pre></div>
+<pre><code>## function (x) 
+## inherits(x, c(&quot;labelled&quot;, &quot;haven_labelled&quot;))
+## &lt;bytecode: 0x7fc9164acc80&gt;
+## &lt;environment: namespace:sjlabelled&gt;</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="chp-2.html#cb19-1" aria-hidden="true" tabindex="-1"></a>expss<span class="sc">::</span>is.labelled</span></code></pre></div>
+<pre><code>## function (x) 
+## {
+##     inherits(x, &quot;labelled&quot;)
+## }
+## &lt;bytecode: 0x7fc91648b630&gt;
+## &lt;environment: namespace:expss&gt;</code></pre>
+<p>The function <code>labelled::is.labelled()</code> returns TRUE if the object is of the class <code>"haven_labelled"</code>. The function <code>sjlabelled::is_labelled()</code> returns TRUE if the object is of class <code>"haven_labelled"</code> <strong>or</strong> <code>"labelled"</code>. The function <code>expss::is.labelled</code> returns TRUE if the object is of the <code>"labelled"</code>. When we read in the data, we saw that the variable <code>division</code> belongs to the class <code>"haven_labelled"</code>, which causes <code>labelled::is.labelled()</code> and <code>sjlabelled::is_labelled()</code> to return TRUE, and <code>expss::is.labelled()</code> to return FALSE.</p>
+<p>The next step is to try to see the variable and value labels.</p>
+</div>
+<div id="var-lab-haven" class="section level3 hasAnchor" number="2.1.2">
+<h3><span class="header-section-number">2.1.2</span> Variable Labels<a href="chp-2.html#var-lab-haven" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="chp-2.html#cb21-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">var_label</span>(CityTemp_haven<span class="sc">$</span>division)</span></code></pre></div>
+<pre><code>## [1] &quot;Census division&quot;</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="chp-2.html#cb23-1" aria-hidden="true" tabindex="-1"></a>sjlabelled<span class="sc">::</span><span class="fu">get_label</span>(CityTemp_haven<span class="sc">$</span>division)</span></code></pre></div>
+<pre><code>## [1] &quot;Census division&quot;</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="chp-2.html#cb25-1" aria-hidden="true" tabindex="-1"></a>expss<span class="sc">::</span><span class="fu">var_lab</span>(CityTemp_haven<span class="sc">$</span>division)</span></code></pre></div>
+<pre><code>## [1] &quot;Census division&quot;</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="chp-2.html#cb27-1" aria-hidden="true" tabindex="-1"></a>readstata13<span class="sc">::</span><span class="fu">varlabel</span>(CityTemp_haven,<span class="st">&quot;division&quot;</span>)</span></code></pre></div>
+<pre><code>## Error in names(varlabel) &lt;- vnames: attempt to set an attribute on NULL</code></pre>
+<p>Both the <code>labelled</code> and <code>sjlabelled</code> packages told us the variable <code>division</code> is labeled. It makes sense then that we can use their functions to look at the variable’s labels. The <code>expss</code> function, on the other hand, told us the variable was not labeled, and yet we can still see the labels.</p>
+<p>It takes a little investigating, but eventually we can find that <code>labelled::var_label()</code>, <code>sjlabelled::get_label()</code>, and <code>expss::var_lab()</code> all fundamentally call the same method: <code>attr(x, "label", exact = TRUE)</code>. As long as an object’s label is stored in an attribute called <code>"label"</code>, any of these functions will return the label.</p>
+<p>The functions in the <code>readstata13</code> package are formulated differently. Trying to look at the variable label using <code>readstata13::varlabel()</code> throws an error. We can take a closer look at the function to see why.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="chp-2.html#cb29-1" aria-hidden="true" tabindex="-1"></a>readstata13<span class="sc">::</span>varlabel</span></code></pre></div>
+<pre><code>## function (dat, var.name = NULL, lang = NA) 
+## {
+##     vnames &lt;- names(dat)
+##     if (is.na(lang) | lang == get.lang(dat, F)$default) {
+##         varlabel &lt;- attr(dat, &quot;var.labels&quot;)
+##         names(varlabel) &lt;- vnames
+##     }
+##     else if (is.character(lang)) {
+##         ex &lt;- attr(dat, &quot;expansion.fields&quot;)
+##         varname &lt;- sapply(ex[grep(paste0(&quot;_lang_v_&quot;, lang), ex)], 
+##             function(x) x[1])
+##         varlabel &lt;- sapply(ex[grep(paste0(&quot;_lang_v_&quot;, lang), 
+##             ex)], function(x) x[3])
+##         names(varlabel) &lt;- varname
+##     }
+##     if (is.null(var.name)) {
+##         return(varlabel[vnames])
+##     }
+##     else {
+##         return(varlabel[var.name])
+##     }
+## }
+## &lt;bytecode: 0x7fc9164788c8&gt;
+## &lt;environment: namespace:readstata13&gt;</code></pre>
+<p>The third lines of the function is <code>varlabel &lt;- attr(dat, "var.labels")</code>. We know from looking at <code>division</code>’s attributes earlier that it does not have an attribute called <code>"var.labels"</code>. When <code>attr(CityTemp, "var.labels")</code> is evaluated, the result is , hence the error message <code>attempt to set an attribute on NULL</code>.</p>
+</div>
+<div id="val-labl-haven" class="section level3 hasAnchor" number="2.1.3">
+<h3><span class="header-section-number">2.1.3</span> Value Labels<a href="chp-2.html#val-labl-haven" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="chp-2.html#cb31-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">val_labels</span>(CityTemp_haven<span class="sc">$</span>division)</span></code></pre></div>
+<pre><code>##   N Eng Mid Atl     ENC     WNC   S Atl     ESC     WSC     Mtn Pacific 
+##       1       2       3       4       5       6       7       8       9</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="chp-2.html#cb33-1" aria-hidden="true" tabindex="-1"></a>sjlabelled<span class="sc">::</span><span class="fu">get_labels</span>(CityTemp_haven<span class="sc">$</span>division)</span></code></pre></div>
+<pre><code>## [1] &quot;N Eng&quot;   &quot;Mid Atl&quot; &quot;ENC&quot;     &quot;WNC&quot;     &quot;S Atl&quot;   &quot;ESC&quot;    
+## [7] &quot;WSC&quot;     &quot;Mtn&quot;     &quot;Pacific&quot;</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="chp-2.html#cb35-1" aria-hidden="true" tabindex="-1"></a>expss<span class="sc">::</span><span class="fu">val_lab</span>(CityTemp_haven<span class="sc">$</span>division)</span></code></pre></div>
+<pre><code>##   N Eng Mid Atl     ENC     WNC   S Atl     ESC     WSC     Mtn Pacific 
+##       1       2       3       4       5       6       7       8       9</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="chp-2.html#cb37-1" aria-hidden="true" tabindex="-1"></a>readstata13<span class="sc">::</span><span class="fu">get.label</span>(CityTemp_haven,<span class="st">&quot;division&quot;</span>)</span></code></pre></div>
+<pre><code>## NULL</code></pre>
+<p>The same pattern seen for variable labels is repeated for value labels. The functions from the packages <code>labelled</code>, <code>sjlabelled</code>, and <code>expss</code> all return the value labels, even though <code>expss::is.labelled()</code> returned FALSE. While <code>readstata13::get.label()</code> does not throw an error, it returns <code>NULL</code>.</p>
+<p>The functions <code>labelled::val_labels()</code>, <code>sjlabelled::get_labels()</code>, and <code>expss::val_lab()</code> are internally very similair to their variable label function counterparts. All three functions call <code>attr(x, "labels", extract = TRUE)</code>. The function <code>sjlabelled::get_labels()</code> further processes the attributes, resulting in a slightly different output than <code>labelled::val_labels()</code> and <code>expss::val_lab()</code>. Notably, <code>labelled::val_labels()</code> only does this if the object belongs to either the <code>"haven_labelled"</code> class or the <code>"data.frame"</code> class. Otherwise, it will just return <code>NULL</code>.</p>
+<p>The reason behind <code>readstata13::get.label()</code> returning <code>NULL</code> is similar to its variable label counter part. Let’s look at the function.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="chp-2.html#cb39-1" aria-hidden="true" tabindex="-1"></a>readstata13<span class="sc">::</span>get.label</span></code></pre></div>
+<pre><code>## function (dat, label.name) 
+## {
+##     return(attr(dat, &quot;label.table&quot;)[label.name][[1]])
+## }
+## &lt;bytecode: 0x7fc916483070&gt;
+## &lt;environment: namespace:readstata13&gt;</code></pre>
+<p>It turns out <code>readstata13::get.label()</code> is a straightforward wrapper function to call the label of a specific variable from the data attribute list. Again, we know that the variable <code>division</code> from the <code>CityTemp_haven</code> data does not have an attribute named <code>"label.table"</code>. When we run <code>attr(CityTemp_haven, "label.table")</code>, we get . Any indexing of <code>NULL</code> will simply return <code>NULL</code>.</p>
+<p>With that, we can fill in our table for data read into R using the <code>haven</code> package.</p>
+<table class="table table-hover" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:haven-label-table">Table 2.3: </span>Table 2.2 filled in with data read in by <code>haven::read_dta()</code>
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Package
+</th>
+<th style="text-align:left;">
+Labels Exists
+</th>
+<th style="text-align:left;">
+Variable Labels
+</th>
+<th style="text-align:left;">
+Value Label
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+haven
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sjlabelled
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+expss
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+readstata13
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+ERROR
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="loading-.dta-file-with-sjlabelled" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Loading .dta file with <code>sjlabelled</code><a href="chp-2.html#loading-.dta-file-with-sjlabelled" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The <code>CityTemp_sjlabelled</code> data structure can be copied from <a href="appendix.html#appendix-CT-sjlabelled">here</a>.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="chp-2.html#cb41-1" aria-hidden="true" tabindex="-1"></a>CityTemp_sjlabelled <span class="ot">&lt;-</span> sjlabelled<span class="sc">::</span><span class="fu">read_stata</span>(<span class="st">&quot;CityTemp.dta&quot;</span>)</span></code></pre></div>
+<pre><code>## Converting atomic to factors. Please wait...</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="chp-2.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(<span class="fu">attributes</span>(CityTemp_sjlabelled))</span></code></pre></div>
+<pre><code>## [1] &quot;names&quot;     &quot;class&quot;     &quot;row.names&quot;</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="chp-2.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(CityTemp_sjlabelled)</span></code></pre></div>
+<pre><code>## [1] &quot;data.frame&quot;</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="chp-2.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(CityTemp_sjlabelled<span class="sc">$</span>division)</span></code></pre></div>
+<pre><code>## $levels
+## [1] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; &quot;5&quot; &quot;6&quot; &quot;7&quot; &quot;8&quot; &quot;9&quot;
+## 
+## $class
+## [1] &quot;factor&quot;
+## 
+## $labels
+##   N Eng Mid Atl     ENC     WNC   S Atl     ESC     WSC     Mtn Pacific 
+##       1       2       3       4       5       6       7       8       9 
+## 
+## $label
+## [1] &quot;Census division&quot;</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="chp-2.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(CityTemp_sjlabelled<span class="sc">$</span>division)</span></code></pre></div>
+<pre><code>##  Factor w/ 9 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 1 1 2 1 1 2 2 1 2 2 ...
+##  - attr(*, &quot;labels&quot;)= Named num [1:9] 1 2 3 4 5 6 7 8 9
+##   ..- attr(*, &quot;names&quot;)= chr [1:9] &quot;N Eng&quot; &quot;Mid Atl&quot; &quot;ENC&quot; &quot;WNC&quot; ...
+##  - attr(*, &quot;label&quot;)= chr &quot;Census division&quot;</code></pre>
+<p>The <code>sjlabelled</code> package is not part of the tidyverse. We see the data read in by <code>sjlabelled::read_stata()</code> only belongs to the class <code>"data.frame"</code>. It is not a tibble. The variable <code>division</code> again as four attributes. The attributes are similar to those of the variable <code>division</code> when the data set is read in with <code>haven::read_dta()</code>. There are two notable differences. First, the class is <code>"factor"</code>, whereas the <code>division</code> variable from the <code>CityTemp_haven</code> belonged to the classes <code>"haven_labelled"</code>, <code>"vctrs_vctr"</code>, and <code>"double"</code>. Next, since the variable is a factor, it has an attribute <code>levels</code>. The <code>levels</code> attribute of <code>division</code> from <code>CityTemp_sjlabelled</code> takes the place of <code>format.stata</code> attribute that <code>division</code> from <code>CityTemp_haven</code> has. An important similarity between the data set variables is that they both have two attributes named <code>label</code> and <code>labels</code>. With this knowledge, a reader could reasonably fill out their expectations for <a href="chp-2.html#tab:labels-table">Table 2</a> with <code>sjlabelled</code> loaded data.</p>
+<div id="label-exist-sjlabelled" class="section level3 hasAnchor" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Label Existence<a href="chp-2.html#label-exist-sjlabelled" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="chp-2.html#cb51-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">is.labelled</span>(CityTemp_sjlabelled<span class="sc">$</span>division)</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="chp-2.html#cb53-1" aria-hidden="true" tabindex="-1"></a>sjlabelled<span class="sc">::</span><span class="fu">is_labelled</span>(CityTemp_sjlabelled<span class="sc">$</span>division)</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="chp-2.html#cb55-1" aria-hidden="true" tabindex="-1"></a>expss<span class="sc">::</span><span class="fu">is.labelled</span>(CityTemp_sjlabelled<span class="sc">$</span>division)</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<p>All three functions return FALSE. This should not be surprising, since the variable <code>division</code> in this case does not belong to either the <code>"haven_labelled"</code> class or the <code>"labelled"</code> class. Thus, even when the user the <code>sjlabelled</code> package to load the data and check for labels, <code>sjlabelled</code> will return that the data is not labeled.</p>
+</div>
+<div id="var-lab-sjlabelled" class="section level3 hasAnchor" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> Variable Labels<a href="chp-2.html#var-lab-sjlabelled" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="chp-2.html#cb57-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">var_label</span>(CityTemp_sjlabelled<span class="sc">$</span>division)</span></code></pre></div>
+<pre><code>## [1] &quot;Census division&quot;</code></pre>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="chp-2.html#cb59-1" aria-hidden="true" tabindex="-1"></a>sjlabelled<span class="sc">::</span><span class="fu">get_label</span>(CityTemp_sjlabelled<span class="sc">$</span>division)</span></code></pre></div>
+<pre><code>## [1] &quot;Census division&quot;</code></pre>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="chp-2.html#cb61-1" aria-hidden="true" tabindex="-1"></a>expss<span class="sc">::</span><span class="fu">var_lab</span>(CityTemp_sjlabelled<span class="sc">$</span>division)</span></code></pre></div>
+<pre><code>## [1] &quot;Census division&quot;</code></pre>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="chp-2.html#cb63-1" aria-hidden="true" tabindex="-1"></a>readstata13<span class="sc">::</span><span class="fu">varlabel</span>(CityTemp_sjlabelled,<span class="st">&quot;division&quot;</span>)</span></code></pre></div>
+<pre><code>## Error in names(varlabel) &lt;- vnames: attempt to set an attribute on NULL</code></pre>
+<p>Just as with the <code>haven</code> loaded data, the first three functions return the variable label, while the <code>readstata13::varlabel()</code> throws an error. The reasoning is exactly the same as explained in section (#var-lab-haven): <code>labelled::var_label()</code>, <code>sjlabelled::get_label()</code>, and <code>expss::var_lab()</code> all look for an attribute <code>label</code>, while <code>readstata13::varlabel()</code> looks for an attribute <code>var.label</code>. The former exists while the latter does not.</p>
+</div>
+<div id="val-lab-sjlabelled" class="section level3 hasAnchor" number="2.2.3">
+<h3><span class="header-section-number">2.2.3</span> Value Labels<a href="chp-2.html#val-lab-sjlabelled" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="chp-2.html#cb65-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">val_labels</span>(CityTemp_sjlabelled<span class="sc">$</span>division)</span></code></pre></div>
+<pre><code>## NULL</code></pre>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="chp-2.html#cb67-1" aria-hidden="true" tabindex="-1"></a>sjlabelled<span class="sc">::</span><span class="fu">get_labels</span>(CityTemp_sjlabelled<span class="sc">$</span>division)</span></code></pre></div>
+<pre><code>## [1] &quot;N Eng&quot;   &quot;Mid Atl&quot; &quot;ENC&quot;     &quot;WNC&quot;     &quot;S Atl&quot;   &quot;ESC&quot;    
+## [7] &quot;WSC&quot;     &quot;Mtn&quot;     &quot;Pacific&quot;</code></pre>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="chp-2.html#cb69-1" aria-hidden="true" tabindex="-1"></a>expss<span class="sc">::</span><span class="fu">val_lab</span>(CityTemp_sjlabelled<span class="sc">$</span>division)</span></code></pre></div>
+<pre><code>##   N Eng Mid Atl     ENC     WNC   S Atl     ESC     WSC     Mtn Pacific 
+##       1       2       3       4       5       6       7       8       9</code></pre>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="chp-2.html#cb71-1" aria-hidden="true" tabindex="-1"></a>readstata13<span class="sc">::</span><span class="fu">get.label</span>(CityTemp_sjlabelled,<span class="st">&quot;division&quot;</span>)</span></code></pre></div>
+<pre><code>## NULL</code></pre>
+<p>In a turn of events, <code>sjlabelled::get_labels()</code> and <code>expss::val_lab()</code> return value labels, while both <code>labelled::val_labels()</code> and <code>readstata13::get.label()</code> return <code>NULL</code>. But… the functions from <code>sjlabelled</code>, <code>expss</code> <em>and</em> <code>labelled</code> are supposed to return the value of the <code>labels</code> attribute, right? WRONG. Recall: <code>labelled::val_labels()</code> will only return the value of the object’s <code>labels</code> attribute <strong>if the object belongs to the <code>"haven_labelled"</code> or <code>"data.frame"</code> class.</strong> Otherwise, it will return <code>NULL</code>, as it does in this case. The variable <code>division</code> from the <code>CityTemp_sjlabelled</code> data only belongs to the <code>"factor"</code> class, so <code>labelled::val_labels()</code> returns <code>NULL</code>.</p>
+<p>The function <code>readstata13::get.label()</code> runs into the same problem as before; namely, the data <code>CityTemp_sjlabelled</code> does not have an attribute <code>"label.table"</code>.</p>
+<p>Now, we can fill in <a href="chp-2.html#tab:labels-table">Table 2</a> for data read in by <code>sjlabelled::read_stata()</code>.</p>
+<table class="table table-hover" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:sjlabelled-label-table">Table 2.4: </span>Table 2.2 filled in with data read in by <code>sjlabelled::read_stata()</code>
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Package
+</th>
+<th style="text-align:left;">
+Labels Exists
+</th>
+<th style="text-align:left;">
+Variable Labels
+</th>
+<th style="text-align:left;">
+Value Label
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+haven
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sjlabelled
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+expss
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+readstata13
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+ERROR
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="loading-.dta-file-with-readstata13" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Loading .dta file with <code>readstata13</code><a href="chp-2.html#loading-.dta-file-with-readstata13" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The final examination of this chapter is data read in by <code>readstata13::read.dta13()</code>. The <code>CityTemp_readstata13</code> data structure can be copied from <a href="appendix.html#appendix-CT-readstata13">here</a>.</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="chp-2.html#cb73-1" aria-hidden="true" tabindex="-1"></a>CityTemp_readstata13 <span class="ot">&lt;-</span> readstata13<span class="sc">::</span><span class="fu">read.dta13</span>(<span class="st">&quot;CityTemp.dta&quot;</span>)</span>
+<span id="cb73-2"><a href="chp-2.html#cb73-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-3"><a href="chp-2.html#cb73-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(<span class="fu">attributes</span>(CityTemp_readstata13))</span></code></pre></div>
+<pre><code>##  [1] &quot;row.names&quot;        &quot;names&quot;            &quot;datalabel&quot;       
+##  [4] &quot;time.stamp&quot;       &quot;formats&quot;          &quot;types&quot;           
+##  [7] &quot;val.labels&quot;       &quot;var.labels&quot;       &quot;version&quot;         
+## [10] &quot;label.table&quot;      &quot;expansion.fields&quot; &quot;byteorder&quot;       
+## [13] &quot;orig.dim&quot;         &quot;data.label&quot;       &quot;class&quot;</code></pre>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="chp-2.html#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(CityTemp_readstata13)</span></code></pre></div>
+<pre><code>## [1] &quot;data.frame&quot;</code></pre>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="chp-2.html#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(CityTemp_readstata13<span class="sc">$</span>division)</span></code></pre></div>
+<pre><code>## $levels
+## [1] &quot;N Eng&quot;   &quot;Mid Atl&quot; &quot;ENC&quot;     &quot;WNC&quot;     &quot;S Atl&quot;   &quot;ESC&quot;    
+## [7] &quot;WSC&quot;     &quot;Mtn&quot;     &quot;Pacific&quot;
+## 
+## $class
+## [1] &quot;factor&quot;</code></pre>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="chp-2.html#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(CityTemp_readstata13<span class="sc">$</span>division)</span></code></pre></div>
+<pre><code>##  Factor w/ 9 levels &quot;N Eng&quot;,&quot;Mid Atl&quot;,..: 1 1 2 1 1 2 2 1 2 2 ...</code></pre>
+<p>It is immediately clear that data read into R by <code>readstata13::read.dta13()</code> has an entirely different structure than data read in by <code>haven::read_dta()</code> or <code>sjlabelled::read_stata()</code>. The data frame <code>CityTemp_readstata13</code> has 14 attributes instead of four like <code>CityTemp_haven</code> or three like <code>CityTemp_sjlabelled</code>. Inversely, its variable <code>division</code> only has two attributes, <code>levels</code> and <code>class</code>, compared to the four the variables from <code>CityTemp_haven</code> and <code>CityTemp_sjlabelled</code> have. Notice that <code>division</code> has neither a <code>label</code> nor <code>labels</code> attribute, and belongs to the class <code>"factor"</code>.</p>
+<div id="label-exist-readstata13" class="section level3 hasAnchor" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Label Existence<a href="chp-2.html#label-exist-readstata13" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="chp-2.html#cb81-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">is.labelled</span>(CityTemp_readstata13<span class="sc">$</span>division)</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="chp-2.html#cb83-1" aria-hidden="true" tabindex="-1"></a>sjlabelled<span class="sc">::</span><span class="fu">is_labelled</span>(CityTemp_readstata13<span class="sc">$</span>division)</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="chp-2.html#cb85-1" aria-hidden="true" tabindex="-1"></a>expss<span class="sc">::</span><span class="fu">is.labelled</span>(CityTemp_readstata13<span class="sc">$</span>division)</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<p>As should be expected, all three functions checking for labels return <code>FALSE</code>. The variable <code>division</code> only belongs to the <code>"factor"</code> class, and these functions are checking if the object passed to them belongs to either the <code>"labelled"</code> or <code>"haven_labelled"</code> class.</p>
+</div>
+<div id="var-lab-readstata13" class="section level3 hasAnchor" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Variables Labels<a href="chp-2.html#var-lab-readstata13" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="chp-2.html#cb87-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">var_label</span>(CityTemp_readstata13<span class="sc">$</span>division)</span></code></pre></div>
+<pre><code>## NULL</code></pre>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="chp-2.html#cb89-1" aria-hidden="true" tabindex="-1"></a>sjlabelled<span class="sc">::</span><span class="fu">get_label</span>(CityTemp_readstata13<span class="sc">$</span>division)</span></code></pre></div>
+<pre><code>## NULL</code></pre>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="chp-2.html#cb91-1" aria-hidden="true" tabindex="-1"></a>expss<span class="sc">::</span><span class="fu">var_lab</span>(CityTemp_readstata13<span class="sc">$</span>division)</span></code></pre></div>
+<pre><code>## NULL</code></pre>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="chp-2.html#cb93-1" aria-hidden="true" tabindex="-1"></a>readstata13<span class="sc">::</span><span class="fu">varlabel</span>(CityTemp_readstata13,<span class="st">&quot;division&quot;</span>)</span></code></pre></div>
+<pre><code>##          division 
+## &quot;Census division&quot;</code></pre>
+<p>At this point the user should not be surprised that neither <code>labelled::var_label()</code>, <code>sjlabelled::get_label()</code>, nor <code>expss::var_lab()</code> return a variable label. The variable <code>division</code> in this case only has two attributes, neither of which are <code>label</code>. Furthermore, it belongs to the <code>"factor"</code> class. Even if it did have a <code>label</code> attribute, <code>labelled::var_label()</code> would still return <code>NULL</code>.</p>
+<p>For the first time, however, we see that <code>readstata13::varlabel()</code> does not return an error, and in fact returns the correct label for the variable. This is because the data frame <code>CityTemp_readstata13</code> has an attribute <code>"var.labels"</code> that contains all the variable labels for all the variables in the data frame. The function <code>readstata13::varlabel()</code> uses this to look up the specific label for <code>division</code>.</p>
+</div>
+<div id="val-lab-readstata13" class="section level3 hasAnchor" number="2.3.3">
+<h3><span class="header-section-number">2.3.3</span> Value Labels<a href="chp-2.html#val-lab-readstata13" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="chp-2.html#cb95-1" aria-hidden="true" tabindex="-1"></a>labelled<span class="sc">::</span><span class="fu">val_labels</span>(CityTemp_readstata13<span class="sc">$</span>division)</span></code></pre></div>
+<pre><code>## NULL</code></pre>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="chp-2.html#cb97-1" aria-hidden="true" tabindex="-1"></a>sjlabelled<span class="sc">::</span><span class="fu">get_labels</span>(CityTemp_readstata13<span class="sc">$</span>division)</span></code></pre></div>
+<pre><code>## [1] &quot;N Eng&quot;   &quot;Mid Atl&quot; &quot;ENC&quot;     &quot;WNC&quot;     &quot;S Atl&quot;   &quot;ESC&quot;    
+## [7] &quot;WSC&quot;     &quot;Mtn&quot;     &quot;Pacific&quot;</code></pre>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="chp-2.html#cb99-1" aria-hidden="true" tabindex="-1"></a>expss<span class="sc">::</span><span class="fu">val_lab</span>(CityTemp_readstata13<span class="sc">$</span>division)</span></code></pre></div>
+<pre><code>## NULL</code></pre>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="chp-2.html#cb101-1" aria-hidden="true" tabindex="-1"></a>readstata13<span class="sc">::</span><span class="fu">get.label</span>(CityTemp_readstata13,<span class="st">&quot;division&quot;</span>)</span></code></pre></div>
+<pre><code>##   N Eng Mid Atl     ENC     WNC   S Atl     ESC     WSC     Mtn Pacific 
+##       1       2       3       4       5       6       7       8       9</code></pre>
+<p>Neither <code>labelled::val_labels()</code> nor <code>expss::val_lab()</code> return value labels. Recall both functions are looking for the attribute <code>labels</code>, which <code>division</code> in this case does not have.</p>
+<p>The <code>sjlabelled::get_labels()</code> function, on the other hand, <em>does</em> return value labels. Huh? Didn’t we establish that <code>sjlabelled::get_labels()</code> also looks for the <code>labels</code> attribute, just like the others? Yes. <strong>But</strong>, recall it was also mentioned that <code>sjlabelled::get_labels()</code> is a bit more complicated than <code>labelled::val_labels()</code> and <code>expss::val_lab()</code>. Unlike the other two functions, if <code>sjlabelled::get_labels()</code> does not see a <code>labels</code> attributes, it will look for factor levels. Here, <code>division</code> belongs to the <code>"factor"</code> class and has a `<code>"levels"</code> attribute, so <code>sjlabelled::get_labels()</code> returns the factor levels as value labels.</p>
+<p>Finally, <code>readstata13::get.label()</code> returns the values labels for <code>division</code>. The data frame <code>CityTemp_readstata13</code> has a <code>"label.tabel"</code> attribute. From that attribute, <code>readstata13::get.label()</code> can look up the value labels specific to <code>division</code>.</p>
+<p>With that, we can fill out our final iteration of <a href="chp-2.html#tab:labels-table">Table 2</a>.</p>
+<table class="table table-hover" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:readstata13-label-table">Table 2.5: </span>Table 2.2 filled in with data read in by <code>readstata13::read.dta13()</code>
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Package
+</th>
+<th style="text-align:left;">
+Labels Exists
+</th>
+<th style="text-align:left;">
+Variable Labels
+</th>
+<th style="text-align:left;">
+Value Label
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+haven
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sjlabelled
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+expss
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+readstata13
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="function-cohesion-summary" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Function Cohesion Summary<a href="chp-2.html#function-cohesion-summary" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="variable-labels" class="section level3 hasAnchor" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> Variable Labels<a href="chp-2.html#variable-labels" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<table style="width:98%;">
+<colgroup>
+<col width="22%" />
+<col width="19%" />
+<col width="20%" />
+<col width="15%" />
+<col width="19%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>City Temp Data</th>
+<th><code>labelled::var_label()</code></th>
+<th><code>sjlabelled::get_label()</code></th>
+<th><code>expss::var_lab()</code></th>
+<th><code>readstata13::varlab()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>haven::read_dta()</code></td>
+<td>TRUE</td>
+<td>TRUE</td>
+<td>TRUE</td>
+<td>ERROR</td>
+</tr>
+<tr class="even">
+<td><code>sjlabelled::read_stata()</code></td>
+<td>TRUE</td>
+<td>TRUE</td>
+<td>TRUE</td>
+<td>ERROR</td>
+</tr>
+<tr class="odd">
+<td><code>readstata13::read.dta13()</code></td>
+<td>FALSE</td>
+<td>FALSE</td>
+<td>FALSE</td>
+<td>FALSE</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="value-labels" class="section level3 hasAnchor" number="2.4.2">
+<h3><span class="header-section-number">2.4.2</span> Value Labels<a href="chp-2.html#value-labels" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<table style="width:98%;">
+<colgroup>
+<col width="21%" />
+<col width="19%" />
+<col width="20%" />
+<col width="15%" />
+<col width="20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>City Temp Data</th>
+<th><code>labelled::val_labels()</code></th>
+<th><code>sjlabelled::get_labels()</code></th>
+<th><code>expss::val_lab()</code></th>
+<th><code>readstata13::get.label()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>haven::read_dta()</code></td>
+<td>FALSE</td>
+<td>TRUE</td>
+<td>TRUE</td>
+<td>FALSE</td>
+</tr>
+<tr class="even">
+<td><code>sjlabelled::read_stata()</code></td>
+<td>FALSE</td>
+<td>TRUE</td>
+<td>TRUE</td>
+<td>FALSE</td>
+</tr>
+<tr class="odd">
+<td><code>readstata13::read.dta13()</code></td>
+<td>FALSE</td>
+<td>FALSE</td>
+<td>FALSE</td>
+<td>FALSE</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="chp-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="appendix.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/MCRoche/Labeling_in_R/edit/master/02-Reading-Stata.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/MCRoche/Labeling_in_R/blob/master/02-Reading-Stata.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

@@ -1,10 +1,10 @@
 # Appendix {#appendix}
 
-# Data structures from [Chapter 2: Reading in Labelled Data: Stata](#chp-2)
+## Data structures from [Chapter 2: Reading in Labelled Data: Stata](#chp-2)
 
-## City Temps {#appendix-CT}
+### City Temps {#appendix-CT}
 
-### Loaded with `haven` {#appendix-CT-haven}
+#### Loaded with `haven` {#appendix-CT-haven}
 
 ```{r appendix-CT-haven}
 
@@ -13,7 +13,7 @@ dput(CityTemp_haven)
 ```
 
 
-### Loaded with `sjlabelled` {#appendix-CT-sjlabelled}
+#### Loaded with `sjlabelled` {#appendix-CT-sjlabelled}
 
 ```{r appendix-CT-sjlabelled}
 
@@ -23,7 +23,7 @@ dput(CityTemp_sjlabelled)
 
 
 
-### Loaded with `readstata13` {#appendix-CT-readstata13}
+#### Loaded with `readstata13` {#appendix-CT-readstata13}
 
 ```{r appendix-CT-readstata13}
 
