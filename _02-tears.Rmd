@@ -40,6 +40,8 @@ A note: The `haven` and `labelled` packages were written to work together, and t
 Another note: If you do not want to gain a deeper understanding of how the various packages treat labeled data and just want to see which functions work with which data inputs, you can use the following links to skip to the answers.
 
 * [Answers to Tabel 2 with data read in with `haven::read_dta()`](\#tab:haven-see-labels)
+* [Answers to Tabel 2 with data read in with `sjlabelled::read_stata()`](\#tab:sjlabelled-see-labels)
+* [Answers to Tabel 2 with data read in with `readstata13::read.dta13()`](\#tab:readstata13-see-labels)
 
 ## Loading .dta file with `haven`
 
