@@ -35,7 +35,9 @@ This chapter is organized as follows. Each section reads in .dta files according
 
 Each section has a subsection that fills in the table of functions to look at labels. That is, a variable that should be labeled is passed into the function in the table and TRUE, FALSE, or ERROR is recorded in the table as a result. A FALSE result means labels should appear, but the function returns NULL. A ERROR result means even if the function is given proper syntax, an error occurs. This happens mostly commonly when the data is not of an appropriate class for the function.
 
-A note: The `haven` and `labelled` packages were written to work together, and thus inherit some functions from each other. In particular, `labelled::is.labelled()` is identical to `haven::is.labelled()`. Therefore, even though `haven` is a separate package, when it comes to checking for the existence of labels, we will only use `labelled` to avoid redundancy.
+A note: The `haven` and `labelled` packages were written to work together, and thus inherit some functions from each other. In particular, `labelled::is.labelled()` is identical to `haven::is.labelled()`. Therefore, even though `haven` is a separate package, when it comes to checking for the existence of labels, we only use `labelled` to avoid redundancy.
+
+<!-- Another note: The `haven` package has a function to view value labels called `print_labels()` that we do not review. The function `haven::print_labels()` is dependent on  -->
 
 Another note: If you do not want to gain a deeper understanding of how the various packages treat labeled data and just want to see which functions work with which data inputs, you can use the following links to skip to the answers.
 

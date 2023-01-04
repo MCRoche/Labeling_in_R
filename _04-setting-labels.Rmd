@@ -1,0 +1,30 @@
+# Setting Variable and Value Labels in R
+
+This chapter looks at assinging labels to unlabeled data.
+
+```{r create-unlabeled-data}
+
+Sample_Dataframe <- data.frame(
+  A = c(1,2,1,2),
+  B = c(5,6,7,8),
+  C = c("a","b","a","b")
+)
+
+Sample_Dataframe_2_Label <- Sample_Dataframe
+
+```
+
+## Using `haven`
+
+```{r haven-labelled}
+
+Sample_Dataframe_2_Label$A <- haven::labelled(Sample_Dataframe_2_Label$A,
+                                              c(One = 1,
+                                                Two = 2))
+
+
+Sample_Dataframe_2_Label$C <- haven::labelled(Sample_Dataframe_2_Label$C,
+                                              c(Vowel = "a",
+                                                Consonant = "b"))
+
+```
